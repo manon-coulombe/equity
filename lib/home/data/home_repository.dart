@@ -12,9 +12,15 @@ class HomeRepository extends IHomeRepository {
       Compte(nom: 'week-end à Marseille', id: '1'),
       Compte(nom: 'super coloc', id: '1'),
       Compte(nom: '30 ans de Fanny', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
+      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '1'),
     ];
 
     return RepoSuccess(comptes);
   }
-
 }

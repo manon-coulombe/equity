@@ -13,8 +13,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: const MaterialApp(
-        title: 'Pokemon',
+      child: MaterialApp(
+        theme: ThemeData(
+            colorSchemeSeed: const Color(0xff6750a4), useMaterial3: true),
+        title: 'Equity',
         home: HomeScreen(),
       ),
     );
