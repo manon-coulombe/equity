@@ -1,9 +1,10 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_project/home/redux/home_redux.dart';
-import 'package:test_project/home/screens/compte_card.dart';
-import 'package:test_project/home/screens/home_viewmodel.dart';
+import 'package:test_project/home/screen/compte_card.dart';
+import 'package:test_project/home/screen/home_viewmodel.dart';
 import 'package:test_project/redux/app_state.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,6 +32,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              showCurrencyPicker(context: context, onSelect: onSelect),
               SizedBox(height: 48),
               InkWell(
                 onTap: () {},

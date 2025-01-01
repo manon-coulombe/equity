@@ -10,9 +10,7 @@ class HomeMiddlewares {
   ) {
     final middlewares = HomeMiddlewares(homeRepository);
     return [
-      TypedMiddleware<AppState, FetchComptesAction>(
-              middlewares._onFetchComptesAction)
-          .call,
+      TypedMiddleware<AppState, FetchComptesAction>(middlewares._onFetchComptesAction).call,
     ];
   }
 
