@@ -1,8 +1,4 @@
-import 'package:currency_picker/currency_picker.dart';
-import 'package:test_project/compte_details/domain/compte_details.dart';
 import 'package:test_project/home/domain/compte.dart';
-import 'package:test_project/compte_details/domain/participant.dart';
-import 'package:test_project/compte_details/domain/transaction.dart';
 import 'package:test_project/utils/repo_result.dart';
 
 abstract class IHomeRepository {

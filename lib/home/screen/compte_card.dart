@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_project/compte_details/screens/compte_details_screen.dart';
 import 'package:test_project/home/domain/compte.dart';
 
 class CompteCard extends StatelessWidget {
@@ -19,6 +20,12 @@ class CompteCard extends StatelessWidget {
         child: InkWell(
           highlightColor: Color(0xFFE7ECFA),
           splashColor: Color(0xFFE7ECFA),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CompteDetailsScreen(compte.id)),
+            );
+          },
           child: Padding(
             padding: EdgeInsets.all(24),
             child: Text(

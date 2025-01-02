@@ -19,22 +19,33 @@ class CompteDetailsReducers {
     AppState state,
     FetchCompteDetailsAction action,
   ) {
-    final compte = state.comptesDetailsState.compteDetails[action.id];
-
-    return state.clone(comptesDetailsState: state.comptesDetailsState.clone(status: Status.LOADING));
+    final Map<String, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+    CompteDetailsState? compteState = map[action.id];
+    if (compteState != null && compteState.status == Status.SUCCESS) {
+      return state;
+    }
+    map[action.id] = CompteDetailsState(status: Status.LOADING);
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
 
   static AppState _onProcessFetchCompteDetailsSuccessAction(
     AppState state,
     ProcessFetchCompteDetailsSuccessAction action,
   ) {
-    return state.clone(homeState: state.homeState.clone(status: Status.SUCCESS, comptes: action.compteDetails));
+    final Map<String, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+    map[action.compteDetails.id] = CompteDetailsState(status: Status.SUCCESS, compteDetails: action.compteDetails);
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
 
   static AppState _onProcessFetchCompteDetailsErrorAction(
     AppState state,
     ProcessFetchCompteDetailsErrorAction action,
   ) {
-    return state.clone(homeState: state.homeState.clone(status: Status.ERROR));
+    final Map<String, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+    if (map[action.id] == null) {
+      map[action.id] = CompteDetailsState(status: Status.ERROR);
+    }
+    map[action.id]!.clone(status: Status.ERROR);
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
 }

@@ -12,4 +12,8 @@ class ProcessFetchCompteDetailsSuccessAction {
   const ProcessFetchCompteDetailsSuccessAction(this.compteDetails);
 }
 
-class ProcessFetchCompteDetailsErrorAction {}
+class ProcessFetchCompteDetailsErrorAction {
+  final String id;
+
+  ProcessFetchCompteDetailsErrorAction(this.id);
+}

@@ -1,7 +1,6 @@
-import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:test_project/UI/bouton_ajouter.dart';
 import 'package:test_project/home/redux/home_redux.dart';
 import 'package:test_project/home/screen/compte_card.dart';
 import 'package:test_project/home/screen/home_viewmodel.dart';
@@ -30,32 +29,25 @@ class HomeScreen extends StatelessWidget {
         builder: (context, vm) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              showCurrencyPicker(context: context, onSelect: onSelect),
               SizedBox(height: 48),
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  'assets/icons/plus.svg',
-                  width: 80,
-                  height: 80,
-                ),
-              ),
+              BoutonAjouter(onTap: () {}),
               SizedBox(height: 48),
               Expanded(
                 child: ListView.builder(
-                    controller: controller,
-                    shrinkWrap: true,
-                    itemCount: vm.comptes.length,
-                    itemBuilder: (context, i) {
-                      return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            CompteCard(vm.comptes[i]),
-                            SizedBox(height: 24)
-                          ]);
-                    }),
+                  controller: controller,
+                  shrinkWrap: true,
+                  itemCount: vm.comptes.length,
+                  itemBuilder: (context, i) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        CompteCard(vm.comptes[i]),
+                        SizedBox(height: 24),
+                      ],
+                    );
+                  },
+                ),
               )
             ],
           ),

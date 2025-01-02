@@ -1,6 +1,4 @@
-import 'package:currency_picker/currency_picker.dart';
 import 'package:test_project/compte_details/domain/compte_details.dart';
-import 'package:test_project/home/domain/compte.dart';
 import 'package:test_project/compte_details/domain/participant.dart';
 import 'package:test_project/compte_details/domain/transaction.dart';
 import 'package:test_project/utils/repo_result.dart';
@@ -30,6 +28,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
           montant: 375,
           deviseCode: 'EUR',
           date: DateTime(2024, 9, 12),
+          id: '1',
         ),
         Depense(
           payeur: participant2,
@@ -39,6 +38,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
           montant: 117,
           deviseCode: 'EUR',
           date: DateTime(2024, 9, 18),
+          id: '2',
         ),
         Depense(
           payeur: participant3,
@@ -48,6 +48,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
           montant: 231.66,
           deviseCode: 'EUR',
           date: DateTime(2024, 9, 10),
+          id: '3',
         ),
       ],
       participants: [participant1, participant2, participant3],

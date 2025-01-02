@@ -1,14 +1,14 @@
 part of 'compte_details_redux.dart';
 
 class ComptesDetailsState extends Equatable {
-  final Map<String, CompteDetails> compteDetails;
+  final Map<String, CompteDetailsState> mapComptesDetailsStates;
 
   const ComptesDetailsState({
-    this.compteDetails = const {},
+    this.mapComptesDetailsStates = const {},
   });
 
   @override
-  List<Object?> get props => [compteDetails];
+  List<Object?> get props => [mapComptesDetailsStates];
 }
 
 class CompteDetailsState extends Equatable {
