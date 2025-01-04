@@ -19,15 +19,17 @@ class TransactionItem extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   transaction.titre,
                   style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.start,
                 ),
                 Text(
                   transaction.formattedDate,

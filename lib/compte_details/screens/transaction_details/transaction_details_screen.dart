@@ -8,6 +8,6 @@ class TransactionDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(body: Text(dm.titre)));
+    return SafeArea(child: Scaffold(appBar: AppBar(title: Text(dm.titre)), body: Text(dm.formattedMontant)));
   }
 }

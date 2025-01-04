@@ -3,8 +3,9 @@ import 'package:flutter_svg/svg.dart';
 
 class BoutonAjouter extends StatelessWidget {
   final void Function() onTap;
+  final double size;
 
-  const BoutonAjouter({super.key, required this.onTap});
+  const BoutonAjouter({super.key, required this.onTap, this.size = 68});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,8 @@ class BoutonAjouter extends StatelessWidget {
       onTap: onTap,
       child: SvgPicture.asset(
         'assets/icons/plus.svg',
-        width: 80,
-        height: 80,
+        width: size,
+        height: size,
       ),
     );
   }

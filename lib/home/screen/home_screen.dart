@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:test_project/UI/bouton_ajouter.dart';
+import 'package:test_project/compte_details/screens/compte_formulaire/compte_formulaire_screen.dart';
 import 'package:test_project/home/redux/home_redux.dart';
 import 'package:test_project/home/screen/compte_card.dart';
 import 'package:test_project/home/screen/home_viewmodel.dart';
@@ -30,9 +31,14 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              SizedBox(height: 48),
-              BoutonAjouter(onTap: () {}),
-              SizedBox(height: 48),
+              SizedBox(height: 32),
+              BoutonAjouter(onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompteFormulaireScreen()),
+                );
+              }),
+              SizedBox(height: 32),
               Expanded(
                 child: ListView.builder(
                   controller: controller,

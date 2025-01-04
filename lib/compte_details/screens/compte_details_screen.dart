@@ -23,7 +23,10 @@ class CompteDetailsScreen extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              title: Text(vm.compteDetails?.titre ?? ''),
+              title: Text(
+                vm.compteDetails?.titre ?? '',
+                style: TextStyle(color: Colors.white),
+              ),
               centerTitle: true,
             ),
             body: switch (vm.status) {
@@ -48,18 +51,46 @@ class Success extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(height: 48),
+        SizedBox(height: 32),
         BoutonAjouter(onTap: () {}),
-        SizedBox(height: 48),
+        SizedBox(height: 32),
+        Divider(color: Colors.black),
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             controller: controller,
             shrinkWrap: true,
             itemCount: transactionsDisplaymodels.length,
-            itemBuilder: (context, i) {
-              return TransactionItem(transactionsDisplaymodels[i]);
+            itemBuilder: (_, i) {
+              return Column(
+                children: [
+                  TransactionItem(transactionsDisplaymodels[i]),
+                  Divider(color: Colors.black),
+                ],
+              );
             },
-            separatorBuilder: (_, __) => Divider(color: Colors.black),
+          ),
+        ),
+        Container(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          padding: EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(vm.compteDetails!.formattedTotal),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(vm.compteDetails!.formattedBalance),
+                ],
+              )
+            ],
           ),
         )
       ],
