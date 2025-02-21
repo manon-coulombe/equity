@@ -15,7 +15,7 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
       deviseCode: this['devise'],
       transactions: transactions,
       participants: participants,
-      totalDepenses: 0,
+      totalDepenses: double.parse(this['totalMontant']),
     );
   }
 
