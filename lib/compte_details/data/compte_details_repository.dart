@@ -1,60 +1,29 @@
-import 'package:test_project/compte_details/domain/compte_details.dart';
-import 'package:test_project/compte_details/domain/participant.dart';
-import 'package:test_project/compte_details/domain/transaction.dart';
-import 'package:test_project/utils/repo_result.dart';
+import 'dart:convert' as convert;
+
+import 'package:equity/compte_details/data/compte_details_repository_mapper.dart';
+import 'package:equity/compte_details/domain/compte_details.dart';
+import 'package:equity/utils/repo_result.dart'
+    show RepoError, RepoResult, RepoSuccess;
+import 'package:http/http.dart' as http;
 
 abstract class ICompteDetailsRepository {
-  Future<RepoResult<CompteDetails>> getCompteDetails(String compteId);
+  Future<RepoResult<CompteDetails>> getCompteDetails(int compteId);
 }
 
 class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
-  Future<RepoResult<CompteDetails>> getCompteDetails(String compteId) async {
-    final participant1 = Participant(id: '1', nom: 'Jean', revenus: 2500);
-    final participant2 = Participant(id: '2', nom: 'Jeanne', revenus: 3450);
-    final participant3 = Participant(id: '3', nom: 'Albus', revenus: 13456);
-
-    final detailsCompte = CompteDetails(
-      id: '1',
-      nom: 'week-end à Marseille',
-      typeDeCompte: TypeDeCompte.VOYAGE,
-      deviseCode: 'EUR',
-      transactions: [
-        Depense(
-          payeur: participant1,
-          payePour: [participant3, participant2, participant1],
-          repartition: {'1': 125, '2': 125, '3': 125},
-          titre: 'Logement',
-          montant: 375,
-          deviseCode: 'EUR',
-          date: DateTime(2024, 9, 12),
-          id: '1',
-        ),
-        Depense(
-          payeur: participant2,
-          payePour: [participant3, participant2, participant1],
-          repartition: {'1': 39, '2': 39, '3': 39},
-          titre: 'Restaurant tapas',
-          montant: 117,
-          deviseCode: 'EUR',
-          date: DateTime(2024, 9, 18),
-          id: '2',
-        ),
-        Depense(
-          payeur: participant3,
-          payePour: [participant3, participant2, participant1],
-          repartition: {'1': 77.22, '2': 77.22, '3': 77.22},
-          titre: 'billets de train',
-          montant: 231.66,
-          deviseCode: 'EUR',
-          date: DateTime(2024, 9, 10),
-          id: '3',
-        ),
-      ],
-      participants: [participant1, participant2, participant3],
-      totalDepenses: 723.66,
+  Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
+    final url = Uri.parse('http://192.168.1.30:3000/compte/$compteId');
+    final response = await http.get(
+      url,
+      headers: {"Content-Type": "application/json", "Accept": "*/*"},
     );
 
-    return RepoSuccess(detailsCompte);
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      final Map<String, dynamic> data = convert.json.decode(response.body);
+      return RepoSuccess(data.toCompteDetails());
+    } else {
+      return RepoError('Une erreur est survenue');
+    }
   }
 }

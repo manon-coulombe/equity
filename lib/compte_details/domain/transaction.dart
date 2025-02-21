@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_project/compte_details/domain/participant.dart';
+import 'package:equity/compte_details/domain/participant.dart';
 
 abstract class Transaction extends Equatable {
-  final String id;
+  final int id;
   final String titre;
   final double montant;
   final String deviseCode;
@@ -22,8 +22,7 @@ abstract class Transaction extends Equatable {
 
 class Depense extends Transaction {
   final Participant payeur;
-  final List<Participant> payePour;
-  final Map<String, double> repartition;
+  final Map<Participant, double> repartition;
 
   const Depense({
     required super.id,
@@ -32,15 +31,13 @@ class Depense extends Transaction {
     required super.deviseCode,
     required super.date,
     required this.payeur,
-    required this.payePour,
     required this.repartition,
   });
 }
 
 class Revenu extends Transaction {
   final Participant receveur;
-  final List<Participant> recuPour;
-  final Map<String, double> repartition;
+  final Map<Participant, double> repartition;
 
   const Revenu({
     required super.id,
@@ -49,7 +46,6 @@ class Revenu extends Transaction {
     required super.deviseCode,
     required super.date,
     required this.receveur,
-    required this.recuPour,
     required this.repartition,
   });
 }

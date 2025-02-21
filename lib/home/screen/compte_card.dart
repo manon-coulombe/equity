@@ -1,6 +1,6 @@
+import 'package:equity/compte_details/screens/compte_details_screen.dart';
+import 'package:equity/home/domain/compte.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/compte_details/screens/compte_details_screen.dart';
-import 'package:test_project/home/domain/compte.dart';
 
 class CompteCard extends StatelessWidget {
   final Compte compte;
@@ -23,7 +23,8 @@ class CompteCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CompteDetailsScreen(compte.id)),
+              MaterialPageRoute(
+                  builder: (context) => CompteDetailsScreen(compte.id)),
             );
           },
           child: Padding(

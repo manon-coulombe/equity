@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_project/compte_details/domain/compte_details.dart';
+import 'package:equity/compte_details/domain/compte_details.dart';
+import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:intl/intl.dart';
-import 'package:test_project/compte_details/domain/transaction.dart';
 
 class CompteDetailsDisplaymodel extends Equatable {
-  final String id;
+  final int id;
   final String titre;
   final String formattedTotal;
   final String formattedBalance;
@@ -19,11 +19,12 @@ class CompteDetailsDisplaymodel extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, titre, formattedTotal, formattedBalance, transactionsDisplaymodels];
+  List<Object?> get props =>
+      [id, titre, formattedTotal, formattedBalance, transactionsDisplaymodels];
 }
 
 class TransactionDisplaymodel extends Equatable {
-  final String id;
+  final int id;
   final String titre;
   final String formattedDate;
   final String formattedMontant;
@@ -47,7 +48,9 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
           titre: compte.nom,
           formattedTotal: '${compte.totalDepenses} ${compte.deviseCode}',
           formattedBalance: 'formattedBalance',
-          transactionsDisplaymodels: compte.transactions.map((trs) => toTransactionDisplaymodel(trs)).toList(),
+          transactionsDisplaymodels: compte.transactions
+              .map((trs) => toTransactionDisplaymodel(trs))
+              .toList(),
         );
 }
 

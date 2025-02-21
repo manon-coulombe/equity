@@ -1,6 +1,5 @@
-
+import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/UI/custom_text_form_field.dart';
 
 class AjoutParticipantBottomsheet extends StatefulWidget {
   const AjoutParticipantBottomsheet({
@@ -8,10 +7,12 @@ class AjoutParticipantBottomsheet extends StatefulWidget {
   });
 
   @override
-  State<AjoutParticipantBottomsheet> createState() => _AjoutParticipantBottomsheetState();
+  State<AjoutParticipantBottomsheet> createState() =>
+      _AjoutParticipantBottomsheetState();
 }
 
-class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomsheet> {
+class _AjoutParticipantBottomsheetState
+    extends State<AjoutParticipantBottomsheet> {
   final _nomController = TextEditingController();
   final _revenusController = TextEditingController();
 

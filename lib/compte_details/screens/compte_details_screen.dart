@@ -1,13 +1,13 @@
+import 'package:equity/UI/bouton_ajouter.dart';
+import 'package:equity/compte_details/screens/compte_details_viewmodel.dart';
+import 'package:equity/compte_details/screens/transaction_item.dart';
+import 'package:equity/redux/app_state.dart';
+import 'package:equity/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:test_project/UI/bouton_ajouter.dart';
-import 'package:test_project/compte_details/screens/compte_details_viewmodel.dart';
-import 'package:test_project/compte_details/screens/transaction_item.dart';
-import 'package:test_project/redux/app_state.dart';
-import 'package:test_project/utils/status.dart';
 
 class CompteDetailsScreen extends StatelessWidget {
-  final String id;
+  final int id;
 
   const CompteDetailsScreen(this.id, {super.key});
 
@@ -32,7 +32,8 @@ class CompteDetailsScreen extends StatelessWidget {
             body: switch (vm.status) {
               Status.LOADING => Loading(),
               Status.ERROR || Status.NOT_LOADED => Error(),
-              Status.SUCCESS => vm.compteDetails != null ? Success(vm) : Error(),
+              Status.SUCCESS =>
+                vm.compteDetails != null ? Success(vm) : Error(),
             });
       },
     );
@@ -47,7 +48,8 @@ class Success extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ScrollController();
-    final transactionsDisplaymodels = vm.compteDetails!.transactionsDisplaymodels;
+    final compteDetails = vm.compteDetails!;
+    final transactionsDisplaymodels = compteDetails.transactionsDisplaymodels;
 
     return Column(
       children: [
@@ -79,14 +81,18 @@ class Success extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text('Total dépenses',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   Text(vm.compteDetails!.formattedTotal),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text('Ma balance',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   Text(vm.compteDetails!.formattedBalance),
                 ],
               )

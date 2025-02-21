@@ -1,10 +1,10 @@
+import 'package:equity/home/redux/home_redux.dart';
+import 'package:equity/home/screens/compte_card.dart';
+import 'package:equity/home/screens/home_viewmodel.dart';
+import 'package:equity/redux/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_project/home/redux/home_redux.dart';
-import 'package:test_project/home/screens/compte_card.dart';
-import 'package:test_project/home/screens/home_viewmodel.dart';
-import 'package:test_project/redux/app_state.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

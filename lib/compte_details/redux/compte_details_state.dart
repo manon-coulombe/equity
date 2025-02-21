@@ -1,7 +1,7 @@
 part of 'compte_details_redux.dart';
 
 class ComptesDetailsState extends Equatable {
-  final Map<String, CompteDetailsState> mapComptesDetailsStates;
+  final Map<int, CompteDetailsState> mapComptesDetailsStates;
 
   const ComptesDetailsState({
     this.mapComptesDetailsStates = const {},

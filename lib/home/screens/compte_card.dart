@@ -1,5 +1,5 @@
+import 'package:equity/home/domain/compte.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/home/domain/compte.dart';
 
 class CompteCard extends StatelessWidget {
   final Compte compte;

@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_project/compte_details/domain/participant.dart';
-import 'package:test_project/compte_details/domain/transaction.dart';
+import 'package:equity/compte_details/domain/participant.dart';
+import 'package:equity/compte_details/domain/transaction.dart';
 
 class CompteDetails extends Equatable {
-  final String id;
+  final int id;
   final String nom;
   final TypeDeCompte typeDeCompte;
   final String deviseCode;
@@ -22,7 +22,15 @@ class CompteDetails extends Equatable {
   });
 
   @override
-  List<Object?> get props => [nom, id, typeDeCompte, deviseCode, participants, transactions, totalDepenses];
+  List<Object?> get props => [
+        nom,
+        id,
+        typeDeCompte,
+        deviseCode,
+        participants,
+        transactions,
+        totalDepenses
+      ];
 }
 
 enum TypeDeCompte {

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:equity/home/domain/compte.dart';
+import 'package:equity/redux/app_state.dart';
 import 'package:redux/redux.dart';
-import 'package:test_project/home/domain/compte.dart';
-import 'package:test_project/redux/app_state.dart';
 
 class HomeViewmodel extends Equatable {
   final List<Compte> comptes;

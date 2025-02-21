@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Compte extends Equatable {
-  final String id;
+  final int id;
   final String nom;
 
   const Compte({required this.nom, required this.id});
@@ -9,4 +9,3 @@ class Compte extends Equatable {
   @override
   List<Object?> get props => [nom, id];
 }
-

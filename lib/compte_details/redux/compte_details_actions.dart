@@ -1,7 +1,7 @@
 part of 'compte_details_redux.dart';
 
 class FetchCompteDetailsAction {
-  final String id;
+  final int id;
 
   FetchCompteDetailsAction(this.id);
 }
@@ -13,7 +13,7 @@ class ProcessFetchCompteDetailsSuccessAction {
 }
 
 class ProcessFetchCompteDetailsErrorAction {
-  final String id;
+  final int id;
 
   ProcessFetchCompteDetailsErrorAction(this.id);
 }

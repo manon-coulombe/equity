@@ -1,5 +1,5 @@
+import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/compte_details/screens/compte_details_displaymodel.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
   final TransactionDisplaymodel dm;
@@ -8,6 +8,9 @@ class TransactionDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(appBar: AppBar(title: Text(dm.titre)), body: Text(dm.formattedMontant)));
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(title: Text(dm.titre)),
+            body: Text(dm.formattedMontant)));
   }
 }

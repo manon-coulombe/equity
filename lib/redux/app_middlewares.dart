@@ -1,9 +1,9 @@
+import 'package:equity/compte_details/data/compte_details_repository.dart';
+import 'package:equity/compte_details/redux/compte_details_redux.dart';
+import 'package:equity/home/data/home_repository.dart';
+import 'package:equity/home/redux/home_redux.dart';
+import 'package:equity/redux/app_state.dart';
 import 'package:redux/redux.dart';
-import 'package:test_project/compte_details/data/compte_details_repository.dart';
-import 'package:test_project/compte_details/redux/compte_details_redux.dart';
-import 'package:test_project/home/data/home_repository.dart';
-import 'package:test_project/home/redux/home_redux.dart';
-import 'package:test_project/redux/app_state.dart';
 
 List<Middleware<AppState>> createAppMiddlewares({
   required IHomeRepository homeRepository,

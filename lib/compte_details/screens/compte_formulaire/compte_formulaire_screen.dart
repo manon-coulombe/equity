@@ -1,8 +1,8 @@
+import 'package:equity/UI/bouton_ajouter.dart';
+import 'package:equity/UI/custom_text_form_field.dart';
+import 'package:equity/compte_details/screens/compte_formulaire/ajput_participant_bottomsheet.dart';
+import 'package:equity/compte_details/screens/compte_formulaire/type_de_compte_card.dart';
 import 'package:flutter/material.dart';
-import 'package:test_project/UI/bouton_ajouter.dart';
-import 'package:test_project/UI/custom_text_form_field.dart';
-import 'package:test_project/compte_details/screens/compte_formulaire/ajput_participant_bottomsheet.dart';
-import 'package:test_project/compte_details/screens/compte_formulaire/type_de_compte_card.dart';
 
 class CompteFormulaireScreen extends StatefulWidget {
   const CompteFormulaireScreen({super.key});

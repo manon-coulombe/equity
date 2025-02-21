@@ -1,5 +1,8 @@
-import 'package:test_project/home/domain/compte.dart';
-import 'package:test_project/utils/repo_result.dart';
+import 'dart:convert' as convert;
+
+import 'package:equity/home/domain/compte.dart';
+import 'package:equity/utils/repo_result.dart';
+import 'package:http/http.dart' as http;
 
 abstract class IHomeRepository {
   Future<RepoResult<List<Compte>>> getComptes();
@@ -8,19 +11,25 @@ abstract class IHomeRepository {
 class HomeRepository extends IHomeRepository {
   @override
   Future<RepoResult<List<Compte>>> getComptes() async {
-    final comptes = [
-      Compte(nom: 'week-end à Marseille', id: '1'),
-      Compte(nom: 'super coloc', id: '2'),
-      Compte(nom: '30 ans de Fanny', id: '3'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '4'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '5'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '6'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '7'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '8'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '9'),
-      Compte(nom: 'Lorem ipsum dolor sit amet.', id: '10'),
-    ];
+    final url = Uri.parse('http://192.168.1.30:3000/');
+    final response = await http.get(
+      url,
+      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+    );
 
-    return RepoSuccess(comptes);
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      final List<dynamic> data = convert.json.decode(response.body);
+      print('data: $data');
+
+      final comptes = data
+          .map(
+            (e) => Compte(nom: e['nom'], id: e['id']),
+          )
+          .toList();
+      print('comptes: $comptes');
+      return RepoSuccess(comptes);
+    } else {
+      return RepoError('Une erreur est survenue');
+    }
   }
 }
