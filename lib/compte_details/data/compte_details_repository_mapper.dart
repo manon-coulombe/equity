@@ -7,15 +7,17 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
     final typeDeCompte = _getTypeDeCompte(this['type']?['nom']);
     final transactions = _getTransactions(this['transactions']);
     final participants = _getParticipants(this['participants']);
+    final repartitionParDefaut = _getRepartitionParDefaut(this['repartition']['nom']);
 
     return CompteDetails(
       id: this['id'],
       nom: this['nom'],
       typeDeCompte: typeDeCompte,
-      deviseCode: this['devise'],
+      currencyCode: this['devise'],
       transactions: transactions,
       participants: participants,
       totalDepenses: double.parse(this['totalMontant']),
+      repartitionParDefaut: repartitionParDefaut,
     );
   }
 
@@ -108,5 +110,13 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
               revenus: double.parse(participant['revenus']),
             ))
         .toList();
+  }
+
+  Repartition _getRepartitionParDefaut(String? repartition) {
+    return switch (repartition) {
+      'EQUITABLE' => Repartition.EQUITABLE,
+      'EGALE' => Repartition.EGALE,
+      _ => Repartition.AUTRE,
+    };
   }
 }

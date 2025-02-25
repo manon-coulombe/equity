@@ -1,14 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
+  final String errorMessage;
 
   const CustomTextFormField({
     super.key,
     required this.label,
     required this.controller,
+    required this.errorMessage,
   });
 
   @override
@@ -16,12 +17,16 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(fontSize: 16)),
+        Text(label, style: TextStyle(fontSize: 18)),
         SizedBox(height: 8),
         TextFormField(
+          onTapOutside: (_) {
+            print('onTapOutside');
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter some text';
+              return errorMessage;
             }
             return null;
           },

@@ -32,13 +32,14 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 32),
-              BoutonAjouter(onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CompteFormulaireScreen()),
-                );
-              }),
+              BoutonAjouter(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CompteFormScreen()),
+                  );
+                },
+              ),
               SizedBox(height: 32),
               Expanded(
                 child: ListView.builder(

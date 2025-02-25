@@ -7,12 +7,10 @@ class AjoutParticipantBottomsheet extends StatefulWidget {
   });
 
   @override
-  State<AjoutParticipantBottomsheet> createState() =>
-      _AjoutParticipantBottomsheetState();
+  State<AjoutParticipantBottomsheet> createState() => _AjoutParticipantBottomsheetState();
 }
 
-class _AjoutParticipantBottomsheetState
-    extends State<AjoutParticipantBottomsheet> {
+class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomsheet> {
   final _nomController = TextEditingController();
   final _revenusController = TextEditingController();
 
@@ -42,11 +40,13 @@ class _AjoutParticipantBottomsheetState
               CustomTextFormField(
                 label: 'Nom',
                 controller: _nomController,
+                errorMessage: 'Saisir le nom',
               ),
               SizedBox(height: 32),
               CustomTextFormField(
                 label: 'Revenus nets par mois',
                 controller: _revenusController,
+                errorMessage: 'Saisir les revenus',
               ),
               SizedBox(height: 32),
               ElevatedButton(

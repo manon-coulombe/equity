@@ -33,8 +33,7 @@ class CompteDetailsScreen extends StatelessWidget {
             body: switch (vm.status) {
               Status.LOADING => Loading(),
               Status.ERROR || Status.NOT_LOADED => Error(),
-              Status.SUCCESS =>
-                vm.compteDetails != null ? Success(vm) : Error(),
+              Status.SUCCESS => vm.compteDetails != null ? Success(vm) : Error(),
             });
       },
     );
@@ -58,7 +57,7 @@ class Success extends StatelessWidget {
         BoutonAjouter(onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TransactionForm()),
+            MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetails)),
           );
         }),
         SizedBox(height: 32),
@@ -87,18 +86,14 @@ class Success extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Total dépenses',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   Text(vm.compteDetails!.formattedTotal),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Ma balance',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   Text(vm.compteDetails!.formattedBalance),
                 ],
               )

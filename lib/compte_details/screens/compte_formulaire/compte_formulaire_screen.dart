@@ -4,14 +4,14 @@ import 'package:equity/compte_details/screens/compte_formulaire/ajput_participan
 import 'package:equity/compte_details/screens/compte_formulaire/type_de_compte_card.dart';
 import 'package:flutter/material.dart';
 
-class CompteFormulaireScreen extends StatefulWidget {
-  const CompteFormulaireScreen({super.key});
+class CompteFormScreen extends StatefulWidget {
+  const CompteFormScreen({super.key});
 
   @override
-  State<CompteFormulaireScreen> createState() => _CompteFormulaireScreenState();
+  State<CompteFormScreen> createState() => _CompteFormScreenState();
 }
 
-class _CompteFormulaireScreenState extends State<CompteFormulaireScreen> {
+class _CompteFormScreenState extends State<CompteFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nomController = TextEditingController();
 
@@ -53,6 +53,7 @@ class _CompteFormulaireScreenState extends State<CompteFormulaireScreen> {
                   CustomTextFormField(
                     controller: _nomController,
                     label: 'Nom du compte',
+                    errorMessage: 'Saisir le nom du compte',
                   ),
                   SizedBox(height: 40),
                   Row(

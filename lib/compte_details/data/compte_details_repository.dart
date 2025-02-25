@@ -2,8 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:equity/compte_details/data/compte_details_repository_mapper.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
-import 'package:equity/utils/repo_result.dart'
-    show RepoError, RepoResult, RepoSuccess;
+import 'package:equity/utils/repo_result.dart' show RepoError, RepoResult, RepoSuccess;
 import 'package:http/http.dart' as http;
 
 abstract class ICompteDetailsRepository {
@@ -13,7 +12,7 @@ abstract class ICompteDetailsRepository {
 class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
-    final url = Uri.parse('http://192.168.1.30:3000/compte/$compteId');
+    final url = Uri.parse('http://192.168.1.44:3000/compte/$compteId');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},
