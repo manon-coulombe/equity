@@ -4,7 +4,6 @@ import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
@@ -57,13 +56,15 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   _setRepartion() {
-    if (montantController.text != '0') {
+    if (montantController.text.isNotEmpty && montantController.text != '0') {
+      final montantTransaction = double.parse(montantController.text.replaceAll(',', '.'));
       switch (selectedRepartition) {
         case Repartition.EGALE:
-          final montant = double.parse(montantController.text) / partitcipants.length;
+          final montant = _arrondir(montantTransaction / partitcipants.length);
           setState(() {
             repartitions = {for (var participant in partitcipants) participant: montant};
           });
+          break;
         case Repartition.EQUITABLE:
           final double revenusTotal = partitcipants.map((p) => p.revenus).fold(
                 0,
@@ -72,13 +73,22 @@ class _TransactionFormState extends State<TransactionForm> {
           setState(() {
             repartitions = {
               for (var participant in partitcipants)
-                participant: double.parse(montantController.text) * (participant.revenus / revenusTotal)
+                participant: _arrondir(montantTransaction * (participant.revenus / revenusTotal))
             };
           });
+          break;
         case Repartition.AUTRE:
           return;
       }
+    } else {
+      setState(() {
+        repartitions = {for (var participant in partitcipants) participant: 0};
+      });
     }
+  }
+
+  double _arrondir(double valeur) {
+    return (valeur * 100).roundToDouble() / 100;
   }
 
   @override
@@ -120,7 +130,6 @@ class _TransactionFormState extends State<TransactionForm> {
                           child: TextFormField(
                               controller: montantController,
                               keyboardType: TextInputType.number,
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Veuillez saisir le montant';
