@@ -37,13 +37,13 @@ class CompteDetailsDisplaymodel extends Equatable {
 }
 
 class TransactionDisplaymodel extends Equatable {
-  final int id;
+  final int? id;
   final String titre;
   final String formattedDate;
   final String formattedMontant;
 
   const TransactionDisplaymodel({
-    required this.id,
+    this.id,
     required this.titre,
     required this.formattedDate,
     required this.formattedMontant,

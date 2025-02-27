@@ -16,14 +16,11 @@ class CompteDetailsViewmodel extends Equatable {
     required this.fetchCompte,
   });
 
-  factory CompteDetailsViewmodel.from(Store<AppState> store,
-      {required int compteId}) {
-    final compteDetailsState =
-        store.state.comptesDetailsState.mapComptesDetailsStates[compteId];
+  factory CompteDetailsViewmodel.from(Store<AppState> store, {required int compteId}) {
+    final compteDetailsState = store.state.comptesDetailsState.mapComptesDetailsStates[compteId];
 
     return CompteDetailsViewmodel(
-      compteDetails:
-          toCompteDetailsDisplaymodel(compteDetailsState?.compteDetails),
+      compteDetails: toCompteDetailsDisplaymodel(compteDetailsState?.compteDetails),
       status: compteDetailsState?.status ?? Status.ERROR,
       fetchCompte: () {
         store.dispatch(FetchCompteDetailsAction(compteId));

@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 
 abstract class Transaction extends Equatable {
-  final int id;
+  final int? id;
   final String titre;
   final double montant;
   final String deviseCode;
   final DateTime date;
 
   const Transaction({
-    required this.id,
+    this.id,
     required this.titre,
     required this.montant,
     required this.deviseCode,
@@ -25,7 +25,7 @@ class Depense extends Transaction {
   final Map<Participant, double> repartition;
 
   const Depense({
-    required super.id,
+    super.id,
     required super.titre,
     required super.montant,
     required super.deviseCode,
@@ -40,7 +40,7 @@ class Revenu extends Transaction {
   final Map<Participant, double> repartition;
 
   const Revenu({
-    required super.id,
+    super.id,
     required super.titre,
     required super.montant,
     required super.deviseCode,
@@ -55,7 +55,7 @@ class Transfert extends Transaction {
   final Participant receveur;
 
   const Transfert({
-    required super.id,
+    super.id,
     required super.titre,
     required super.montant,
     required super.deviseCode,

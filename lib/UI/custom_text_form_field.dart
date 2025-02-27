@@ -22,6 +22,7 @@ class CustomTextFormField extends FormField<String?> {
               Text(label, style: TextStyle(fontSize: 18)),
               SizedBox(height: 8),
               TextFormField(
+                textCapitalization: TextCapitalization.sentences,
                 onTapOutside: (_) {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },

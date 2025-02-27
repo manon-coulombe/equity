@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:equity/compte_details/data/compte_details_repository.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
+import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:equity/utils/status.dart';
 import 'package:redux/redux.dart';

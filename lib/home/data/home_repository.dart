@@ -19,14 +19,12 @@ class HomeRepository extends IHomeRepository {
 
     if (response.statusCode == 200 && response.body.isNotEmpty) {
       final List<dynamic> data = convert.json.decode(response.body);
-      print('data: $data');
 
       final comptes = data
           .map(
             (e) => Compte(nom: e['nom'], id: e['id']),
           )
           .toList();
-      print('comptes: $comptes');
       return RepoSuccess(comptes);
     } else {
       return RepoError('Une erreur est survenue');

@@ -17,3 +17,22 @@ class ProcessFetchCompteDetailsErrorAction {
 
   ProcessFetchCompteDetailsErrorAction(this.id);
 }
+
+class PostTransactionAction {
+  final Transaction transaction;
+  final int compteId;
+
+  PostTransactionAction({required this.transaction, required this.compteId});
+}
+
+class ProcessPostTransactionSuccessAction {
+  final int compteId;
+
+  ProcessPostTransactionSuccessAction({required this.compteId});
+}
+
+class ProcessPostTransactionErrorAction {
+  final int compteId;
+
+  ProcessPostTransactionErrorAction({required this.compteId});
+}

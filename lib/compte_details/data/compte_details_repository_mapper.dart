@@ -120,3 +120,58 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
     };
   }
 }
+
+extension TransactionMapper on Transaction {
+  Object toTransactionJson(int compteId) {
+    return {
+      'nom': titre,
+      'montant': montant.toString(),
+      'devise': deviseCode,
+      'date': date.toString(),
+      'compte_id': compteId,
+      'type_id': _toTypeId(),
+      'payeur_id': _toPayeurId(),
+      'repartitions': _toRepartition(),
+    };
+  }
+
+  int _toTypeId() {
+    return switch (this) {
+      Depense _ => 1,
+      Revenu _ => 2,
+      Transfert _ => 3,
+      Transaction() => throw UnimplementedError(),
+    };
+  }
+
+  int _toPayeurId() {
+    return switch (this) {
+      Depense depense => depense.payeur.id,
+      Revenu revenu => revenu.receveur.id,
+      Transfert transfert => transfert.payeur.id,
+      Transaction() => throw UnimplementedError(),
+    };
+  }
+
+  List<Map<String, dynamic>> _toRepartition() {
+    return switch (this) {
+      Depense depense => depense.repartition.entries
+          .map((entry) => {
+                'participant_id': entry.key.id,
+                'montant': entry.value.toString(),
+              })
+          .toList(),
+      Revenu revenu => revenu.repartition.entries
+          .map((entry) => {
+                'participant_id': entry.key.id,
+                'montant': entry.value.toString(),
+              })
+          .toList(),
+      Transfert transfert => [
+          {'participant_id': transfert.payeur.id, 'montant': (-transfert.montant).toString()},
+          {'participant_id': transfert.receveur.id, 'montant': transfert.montant.toString()},
+        ],
+      Transaction() => throw UnimplementedError(),
+    };
+  }
+}
