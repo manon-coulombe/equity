@@ -28,4 +28,28 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
-
+  fonts:
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Bold.ttf
+        - asset: assets/fonts/Raleway-BoldItalic.ttf
+        - asset: assets/fonts/Raleway-ExtraBold.ttf
+        - asset: assets/fonts/Raleway-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Raleway-ExtraLight.ttf
+        - asset: assets/fonts/Raleway-ExtraLightItalic.ttf
+        - asset: assets/fonts/Raleway-Italic.ttf
+        - asset: assets/fonts/Raleway-Light.ttf
+        - asset: assets/fonts/Raleway-LightItalic.ttf
+        - asset: assets/fonts/Raleway-Medium.ttf
+        - asset: assets/fonts/Raleway-MediumItalic.ttf
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-SemiBold.ttf
+        - asset: assets/fonts/Raleway-SemiBoldItalic.ttf
+    - family: Mplus
+      fonts:
+        - asset: assets/fonts/MPLUSRounded1c-Black.ttf
+        - asset: assets/fonts/MPLUSRounded1c-Bold.ttf
+        - asset: assets/fonts/MPLUSRounded1c-ExtraBold.ttf
+        - asset: assets/fonts/MPLUSRounded1c-Light.ttf
+        - asset: assets/fonts/MPLUSRounded1c-Medium.ttf
+        - asset: assets/fonts/MPLUSRounded1c-Regular.ttf

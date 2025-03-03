@@ -25,10 +25,10 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Color.fromRGBO(253, 221, 219, 1),
         title: Text(
           'Nouveau compte Equity',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Color.fromRGBO(254, 99, 101, 1), fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
       ),

@@ -15,7 +15,13 @@ class App extends StatelessWidget {
       store: store,
       child: MaterialApp(
         theme: ThemeData(
-            colorSchemeSeed: const Color(0xff6750a4), useMaterial3: true),
+          fontFamily: 'Raleway',
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Color(0xfffddddb),
+            brightness: Brightness.light,
+          ),
+        ),
         title: 'Equity',
         home: HomeScreen(),
       ),

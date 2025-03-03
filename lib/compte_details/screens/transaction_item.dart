@@ -15,8 +15,7 @@ class TransactionItem extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => TransactionDetailsScreen(transaction)),
+          MaterialPageRoute(builder: (context) => TransactionDetailsScreen(transaction)),
         );
       },
       child: Padding(
@@ -29,7 +28,7 @@ class TransactionItem extends StatelessWidget {
               children: [
                 Text(
                   transaction.titre,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.start,
                 ),
                 Text(
@@ -38,7 +37,10 @@ class TransactionItem extends StatelessWidget {
                 ),
               ],
             ),
-            Text(transaction.formattedMontant),
+            Text(
+              transaction.formattedMontant,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
           ],
         ),
       ),

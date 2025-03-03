@@ -103,10 +103,10 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Color.fromRGBO(253, 221, 219, 1),
           title: Text(
             'Nouvelle transaction',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Color.fromRGBO(254, 99, 101, 1), fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
         ),
@@ -355,11 +355,12 @@ class _TransactionFormState extends State<TransactionForm> {
                         },
                         style: OutlinedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                          backgroundColor: Colors.white,
+                          backgroundColor: Color.fromRGBO(252, 99, 97, 1),
                         ),
                         child: const Text(
                           'Valider',
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(
+                              fontSize: 22, color: Color.fromRGBO(253, 221, 219, 1), fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),

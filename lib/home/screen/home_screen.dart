@@ -14,14 +14,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = ScrollController();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'EQUITY',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
       body: StoreConnector<AppState, HomeViewmodel>(
         converter: (store) => HomeViewmodel.from(store),
         onInit: (store) {
@@ -31,7 +23,12 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              SizedBox(height: 32),
+              SizedBox(height: 80),
+              Text(
+                'equity',
+                style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
+              ),
+              SizedBox(height: 40),
               BoutonAjouter(
                 onTap: () {
                   Navigator.push(

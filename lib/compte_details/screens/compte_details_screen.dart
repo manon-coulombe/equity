@@ -23,10 +23,10 @@ class CompteDetailsScreen extends StatelessWidget {
       builder: (context, vm) {
         return Scaffold(
             appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: Color.fromRGBO(253, 221, 219, 1),
               title: Text(
                 vm.compteDetails?.titre ?? '',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color.fromRGBO(254, 99, 101, 1), fontWeight: FontWeight.w700),
               ),
               centerTitle: true,
             ),
@@ -78,8 +78,8 @@ class Success extends StatelessWidget {
           ),
         ),
         Container(
-          color: Theme.of(context).colorScheme.inversePrimary,
-          padding: EdgeInsets.all(8),
+          color: Color.fromRGBO(106, 208, 153, 1),
+          padding: EdgeInsets.all(16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
