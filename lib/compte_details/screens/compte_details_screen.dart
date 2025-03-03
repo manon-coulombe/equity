@@ -1,4 +1,4 @@
-import 'package:equity/UI/bouton_ajouter.dart';
+import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/compte_details/screens/compte_details_viewmodel.dart';
 import 'package:equity/compte_details/screens/transaction_details/transaction_form.dart';
 import 'package:equity/compte_details/screens/transaction_item.dart';
@@ -54,7 +54,7 @@ class Success extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: 32),
-        BoutonAjouter(onTap: () {
+        BoutonAdd(onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetails)),

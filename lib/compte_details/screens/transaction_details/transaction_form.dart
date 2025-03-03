@@ -1,4 +1,5 @@
 import 'package:currency_picker/currency_picker.dart';
+import 'package:equity/UI/button_validate.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
@@ -337,8 +338,8 @@ class _TransactionFormState extends State<TransactionForm> {
                       }
                     },
                     builder: (context, vm) => Center(
-                      child: OutlinedButton(
-                        onPressed: () {
+                      child: ButtonValidate(
+                        onValidate: () {
                           if (_formKey.currentState!.validate()) {
                             vm.postTransaction(
                               transaction: Depense(
@@ -353,15 +354,6 @@ class _TransactionFormState extends State<TransactionForm> {
                             );
                           }
                         },
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                          backgroundColor: Color.fromRGBO(252, 99, 97, 1),
-                        ),
-                        child: const Text(
-                          'Valider',
-                          style: TextStyle(
-                              fontSize: 22, color: Color.fromRGBO(253, 221, 219, 1), fontWeight: FontWeight.w700),
-                        ),
                       ),
                     ),
                   ),

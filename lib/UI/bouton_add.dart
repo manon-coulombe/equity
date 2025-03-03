@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BoutonAjouter extends StatelessWidget {
+class BoutonAdd extends StatelessWidget {
   final void Function() onTap;
   final double size;
 
-  const BoutonAjouter({super.key, required this.onTap, this.size = 68});
+  const BoutonAdd({super.key, required this.onTap, this.size = 68});
 
   @override
   Widget build(BuildContext context) {

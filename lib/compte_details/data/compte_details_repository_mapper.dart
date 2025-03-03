@@ -71,7 +71,7 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
                 deviseCode: deviseCode,
                 date: date,
                 payeur: payeur,
-                receveur: _getReceveur(map['repartitions'], payeur.id),
+                receveur: _getReceveur(map['repartitions'], payeur.id!),
               ),
             _ => null,
           };
@@ -144,7 +144,7 @@ extension TransactionMapper on Transaction {
     };
   }
 
-  int _toPayeurId() {
+  int? _toPayeurId() {
     return switch (this) {
       Depense depense => depense.payeur.id,
       Revenu revenu => revenu.receveur.id,
@@ -172,6 +172,16 @@ extension TransactionMapper on Transaction {
           {'participant_id': transfert.receveur.id, 'montant': transfert.montant.toString()},
         ],
       Transaction() => throw UnimplementedError(),
+    };
+  }
+}
+
+extension ParticipantMapper on Participant {
+  Object toParticipantJson(int compteId) {
+    return {
+      'compte_id': compteId,
+      'nom': nom,
+      'revenus': revenus.toString(),
     };
   }
 }

@@ -1,4 +1,4 @@
-import 'package:equity/UI/bouton_ajouter.dart';
+import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/compte_details/screens/compte_formulaire/compte_formulaire_screen.dart';
 import 'package:equity/home/redux/home_redux.dart';
 import 'package:equity/home/screen/compte_card.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
               ),
               SizedBox(height: 40),
-              BoutonAjouter(
+              BoutonAdd(
                 onTap: () {
                   Navigator.push(
                     context,

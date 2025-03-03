@@ -37,10 +37,14 @@ class CompteDetails extends Equatable {
 }
 
 enum TypeDeCompte {
-  COUPLE,
-  COLOCATION,
-  VOYAGE,
-  PROJET;
+  COUPLE('Couple'),
+  COLOCATION('Colocation'),
+  VOYAGE('Voyage'),
+  PROJET('Projet');
+
+  final String label;
+
+  const TypeDeCompte(this.label);
 }
 
 enum Repartition {

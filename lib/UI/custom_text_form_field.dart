@@ -4,12 +4,14 @@ class CustomTextFormField extends FormField<String?> {
   final String label;
   final TextEditingController controller;
   final String errorMessage;
+  final TextInputType keyboardType;
 
   CustomTextFormField({
     super.key,
     required this.label,
     required this.controller,
     required this.errorMessage,
+    this.keyboardType = TextInputType.text
   }) : super(validator: (_) {
           if (controller.text.isEmpty) {
             return errorMessage;
@@ -23,6 +25,7 @@ class CustomTextFormField extends FormField<String?> {
               SizedBox(height: 8),
               TextFormField(
                 textCapitalization: TextCapitalization.sentences,
+                keyboardType: keyboardType,
                 onTapOutside: (_) {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
