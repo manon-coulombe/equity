@@ -1,4 +1,5 @@
 # Equity
+![GitHub repo](https://img.shields.io/badge/GitHub-Repo-blue?style=flat-square&logo=github)
 
 Equity est une application mobile de gestion d'argent à plusieurs, permettant de diviser les dépenses de manière équitable en fonction des revenus des participants.
 
