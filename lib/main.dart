@@ -8,8 +8,10 @@ import 'package:equity/redux/app_reducers.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: '.env');
   final store = Store<AppState>(
     appReducers,
     middleware: createAppMiddlewares(

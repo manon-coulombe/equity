@@ -3,16 +3,18 @@ import 'dart:convert' as convert;
 import 'package:equity/home/domain/compte.dart';
 import 'package:equity/utils/repo_result.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class IHomeRepository {
   Future<RepoResult<List<Compte>>> getComptes();
 }
 
 class HomeRepository extends IHomeRepository {
+  final apiUrl = dotenv.env['API_URL'];
+
   @override
   Future<RepoResult<List<Compte>>> getComptes() async {
-    // final url = Uri.parse('https://equity-api.onrender.com/');
-    final url = Uri.parse('http://192.168.1.100:3000/');
+    final url = Uri.parse('$apiUrl');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},

@@ -6,6 +6,8 @@ import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/utils/repo_result.dart' show RepoError, RepoResult, RepoSuccess;
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 abstract class ICompteDetailsRepository {
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId);
@@ -18,10 +20,10 @@ abstract class ICompteDetailsRepository {
 }
 
 class CompteDetailsRepository extends ICompteDetailsRepository {
+  final apiUrl = dotenv.env['API_URL'];
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
-    // final url = Uri.parse('https://equity-api.onrender.com/compte/$compteId');
-    final url = Uri.parse('http://192.168.1.100:3000/compte/$compteId');
+    final url = Uri.parse('$apiUrl$compteId');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},
@@ -37,8 +39,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
 
   @override
   Future<RepoResult<void>> postTransaction(Transaction transaction, int compteId) async {
-    // final url = Uri.parse('https://equity-api.onrender.com/transaction');
-    final url = Uri.parse('http://192.168.1.100:3000/transaction');
+    final url = Uri.parse('${apiUrl}transaction');
 
     final response = await http.post(
       url,
@@ -55,8 +56,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
 
   @override
   Future<RepoResult<void>> postParticipant(Participant participant, int compteId) async {
-    // final url = Uri.parse('https://equity-api.onrender.com/participant');
-    final url = Uri.parse('http://192.168.1.100:3000/participant');
+    final url = Uri.parse('${apiUrl}participant');
 
     final response = await http.post(
       url,
@@ -73,7 +73,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
 
   @override
   Future<RepoResult<int>> postCompte(CompteDetails compte) async {
-    final url = Uri.parse('http://192.168.1.100:3000/compte');
+    final url = Uri.parse('${apiUrl}compte');
 
     final response = await http.post(
       url,
