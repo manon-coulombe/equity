@@ -11,7 +11,8 @@ abstract class IHomeRepository {
 class HomeRepository extends IHomeRepository {
   @override
   Future<RepoResult<List<Compte>>> getComptes() async {
-    final url = Uri.parse('https://equity-api.onrender.com/');
+    // final url = Uri.parse('https://equity-api.onrender.com/');
+    final url = Uri.parse('http://192.168.1.100:3000/');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},

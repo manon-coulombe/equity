@@ -1,14 +1,29 @@
 part of 'compte_details_redux.dart';
 
 class ComptesDetailsState extends Equatable {
+  final Status postCompteStatus;
+  final int? lastPostedCompteId;
   final Map<int, CompteDetailsState> mapComptesDetailsStates;
 
   const ComptesDetailsState({
+    this.postCompteStatus = Status.NOT_LOADED,
+    this.lastPostedCompteId = null,
     this.mapComptesDetailsStates = const {},
   });
 
+  ComptesDetailsState clone({
+    Status? postCompteStatus,
+    int? lastPostedCompteId,
+  }) {
+    return ComptesDetailsState(
+      postCompteStatus: postCompteStatus ?? this.postCompteStatus,
+      lastPostedCompteId: lastPostedCompteId ?? this.lastPostedCompteId,
+      mapComptesDetailsStates: mapComptesDetailsStates,
+    );
+  }
+
   @override
-  List<Object?> get props => [mapComptesDetailsStates];
+  List<Object?> get props => [mapComptesDetailsStates, postCompteStatus];
 }
 
 class CompteDetailsState extends Equatable {

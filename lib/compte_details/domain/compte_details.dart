@@ -3,7 +3,7 @@ import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
 
 class CompteDetails extends Equatable {
-  final int id;
+  final int? id;
   final String nom;
   final TypeDeCompte typeDeCompte;
   final String currencyCode;
@@ -13,7 +13,7 @@ class CompteDetails extends Equatable {
   final Repartition repartitionParDefaut;
 
   const CompteDetails({
-    required this.id,
+    this.id,
     required this.nom,
     required this.typeDeCompte,
     required this.currencyCode,
@@ -37,22 +37,24 @@ class CompteDetails extends Equatable {
 }
 
 enum TypeDeCompte {
-  COUPLE('Couple'),
-  COLOCATION('Colocation'),
-  VOYAGE('Voyage'),
-  PROJET('Projet');
+  COUPLE('Couple', 1),
+  COLOCATION('Colocation', 2),
+  VOYAGE('Voyage', 3),
+  PROJET('Projet', 4);
 
   final String label;
+  final int id;
 
-  const TypeDeCompte(this.label);
+  const TypeDeCompte(this.label, this.id);
 }
 
 enum Repartition {
-  EQUITABLE('Équitable'),
-  EGALE('Égale'),
-  AUTRE('Personnalisée');
+  EQUITABLE('Équitable', 1),
+  EGALE('Égale', 2),
+  AUTRE('Personnalisée', 0);
 
   final String label;
+  final int id;
 
-  const Repartition(this.label);
+  const Repartition(this.label, this.id);
 }

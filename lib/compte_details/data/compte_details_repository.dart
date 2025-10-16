@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 abstract class ICompteDetailsRepository {
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId);
 
+  Future<RepoResult<int>> postCompte(CompteDetails compte);
+
   Future<RepoResult<void>> postTransaction(Transaction transaction, int compteId);
 
   Future<RepoResult<void>> postParticipant(Participant participant, int compteId);
@@ -18,7 +20,8 @@ abstract class ICompteDetailsRepository {
 class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
-    final url = Uri.parse('https://equity-api.onrender.com/compte/$compteId');
+    // final url = Uri.parse('https://equity-api.onrender.com/compte/$compteId');
+    final url = Uri.parse('http://192.168.1.100:3000/compte/$compteId');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},
@@ -34,7 +37,9 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
 
   @override
   Future<RepoResult<void>> postTransaction(Transaction transaction, int compteId) async {
-    final url = Uri.parse('https://equity-api.onrender.com/transaction');
+    // final url = Uri.parse('https://equity-api.onrender.com/transaction');
+    final url = Uri.parse('http://192.168.1.100:3000/transaction');
+
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},
@@ -50,7 +55,9 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
 
   @override
   Future<RepoResult<void>> postParticipant(Participant participant, int compteId) async {
-    final url = Uri.parse('https://equity-api.onrender.com/participant');
+    // final url = Uri.parse('https://equity-api.onrender.com/participant');
+    final url = Uri.parse('http://192.168.1.100:3000/participant');
+
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},
@@ -60,6 +67,25 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
     if (response.statusCode == 201) {
       return RepoSuccess(null);
     } else {
+      return RepoError('Une erreur est survenue');
+    }
+  }
+
+  @override
+  Future<RepoResult<int>> postCompte(CompteDetails compte) async {
+    final url = Uri.parse('http://192.168.1.100:3000/compte');
+
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      body: convert.jsonEncode(compte.toCompteJson()),
+    );
+
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> data = convert.json.decode(response.body);
+      return RepoSuccess(data['id']);
+    } else {
+
       return RepoError('Une erreur est survenue');
     }
   }

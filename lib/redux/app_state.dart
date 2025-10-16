@@ -11,8 +11,7 @@ class AppState extends Equatable {
     required this.comptesDetailsState,
   });
 
-  AppState clone(
-      {HomeState? homeState, ComptesDetailsState? comptesDetailsState}) {
+  AppState clone({HomeState? homeState, ComptesDetailsState? comptesDetailsState}) {
     return AppState(
       homeState: homeState ?? this.homeState,
       comptesDetailsState: comptesDetailsState ?? this.comptesDetailsState,

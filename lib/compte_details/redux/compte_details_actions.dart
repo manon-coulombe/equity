@@ -18,6 +18,20 @@ class ProcessFetchCompteDetailsErrorAction {
   ProcessFetchCompteDetailsErrorAction(this.id);
 }
 
+class PostCompteAction {
+  final CompteDetails compte;
+
+  PostCompteAction(this.compte);
+}
+
+class ProcessPostCompteSuccessAction {
+  final int compteId;
+
+  ProcessPostCompteSuccessAction({required this.compteId});
+}
+
+class ProcessPostCompteErrorAction {}
+
 class PostTransactionAction {
   final Transaction transaction;
   final int compteId;

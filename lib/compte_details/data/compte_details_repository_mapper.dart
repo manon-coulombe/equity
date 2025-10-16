@@ -2,12 +2,13 @@ import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
 
-extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
+extension CompteJsonMapper on Map<String, dynamic> {
   CompteDetails toCompteDetails() {
     final typeDeCompte = _getTypeDeCompte(this['type']?['nom']);
     final transactions = _getTransactions(this['transactions']);
     final participants = _getParticipants(this['participants']);
-    final repartitionParDefaut = _getRepartitionParDefaut(this['repartition']['nom']);
+    //TODO
+    // final repartitionParDefaut = _getRepartitionParDefaut(this['repartition']['nom']);
 
     return CompteDetails(
       id: this['id'],
@@ -16,8 +17,8 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
       currencyCode: this['devise'],
       transactions: transactions,
       participants: participants,
-      totalDepenses: double.parse(this['totalMontant']),
-      repartitionParDefaut: repartitionParDefaut,
+      totalDepenses: this['totalMontant'].toDouble(),
+      repartitionParDefaut: Repartition.EQUITABLE,
     );
   }
 
@@ -36,7 +37,7 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
           final type = map['type']['nom'] as String;
           final id = map['id'];
           final nom = map['nom'];
-          final montant = double.parse(map['montant']);
+          final montant = map['montant'].toDouble();
           final deviseCode = map['devise'];
           final date = DateTime.parse(map['date']);
           final payeur = Participant(
@@ -121,6 +122,18 @@ extension CompteDetailsRepositoryMapper on Map<String, dynamic> {
   }
 }
 
+extension CompteDetailsMapper on CompteDetails {
+  Object toCompteJson() {
+    return {
+      'nom': nom,
+      'devise': currencyCode,
+      'type_id': typeDeCompte.id,
+      'repartition_id': repartitionParDefaut.id,
+      'participants': participants.map((p) => p.toParticipantJson(id)).toList(),
+    };
+  }
+}
+
 extension TransactionMapper on Transaction {
   Object toTransactionJson(int compteId) {
     return {
@@ -177,7 +190,7 @@ extension TransactionMapper on Transaction {
 }
 
 extension ParticipantMapper on Participant {
-  Object toParticipantJson(int compteId) {
+  Object toParticipantJson(int? compteId) {
     return {
       'compte_id': compteId,
       'nom': nom,

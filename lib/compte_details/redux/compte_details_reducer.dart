@@ -12,6 +12,15 @@ class CompteDetailsReducers {
       TypedReducer<AppState, ProcessFetchCompteDetailsErrorAction>(
         CompteDetailsReducers._onProcessFetchCompteDetailsErrorAction,
       ).call,
+      TypedReducer<AppState, PostCompteAction>(
+        CompteDetailsReducers._onPostCompteAction,
+      ).call,
+      TypedReducer<AppState, ProcessPostCompteSuccessAction>(
+        CompteDetailsReducers._onProcessPostCompteSuccessAction,
+      ).call,
+      TypedReducer<AppState, ProcessPostCompteErrorAction>(
+        CompteDetailsReducers._onProcessPostCompteErrorAction,
+      ).call,
       TypedReducer<AppState, PostTransactionAction>(
         CompteDetailsReducers._onPostTransactionAction,
       ).call,
@@ -42,7 +51,7 @@ class CompteDetailsReducers {
     ProcessFetchCompteDetailsSuccessAction action,
   ) {
     final Map<int, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
-    map[action.compteDetails.id] = CompteDetailsState(status: Status.SUCCESS, compteDetails: action.compteDetails);
+    map[action.compteDetails.id!] = CompteDetailsState(status: Status.SUCCESS, compteDetails: action.compteDetails);
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
 
@@ -57,6 +66,32 @@ class CompteDetailsReducers {
       map[action.id]!.clone(status: Status.ERROR);
     }
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
+  }
+
+  static AppState _onPostCompteAction(
+    AppState state,
+    PostCompteAction action,
+  ) {
+    return state.clone(comptesDetailsState: ComptesDetailsState(postCompteStatus: Status.LOADING));
+  }
+
+  static AppState _onProcessPostCompteSuccessAction(
+    AppState state,
+    ProcessPostCompteSuccessAction action,
+  ) {
+    return state.clone(
+      comptesDetailsState: state.comptesDetailsState.clone(
+        postCompteStatus: Status.SUCCESS,
+        lastPostedCompteId: action.compteId,
+      ),
+    );
+  }
+
+  static AppState _onProcessPostCompteErrorAction(
+    AppState state,
+    ProcessPostCompteErrorAction action,
+  ) {
+    return state.clone(comptesDetailsState: ComptesDetailsState(postCompteStatus: Status.ERROR));
   }
 
   static AppState _onPostTransactionAction(

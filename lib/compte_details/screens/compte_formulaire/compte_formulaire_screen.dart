@@ -2,9 +2,14 @@ import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
+import 'package:equity/compte_details/screens/compte_details_screen.dart';
 import 'package:equity/compte_details/screens/compte_formulaire/ajput_participant_bottomsheet.dart';
+import 'package:equity/compte_details/screens/compte_formulaire/compte_form_viewmodel.dart';
 import 'package:equity/compte_details/screens/compte_formulaire/type_de_compte_card.dart';
+import 'package:equity/redux/app_state.dart';
+import 'package:equity/utils/status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class CompteFormScreen extends StatefulWidget {
   const CompteFormScreen({super.key});
@@ -115,6 +120,37 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                       separatorBuilder: (context, i) => Divider(),
                     ),
                   ),
+                  SizedBox(height: 32),
+                  StoreConnector<AppState, CompteFormViewmodel>(
+                    distinct: true,
+                    converter: (store) => CompteFormViewmodel.from(store),
+                    onWillChange: (oldVm, vm) => {
+                      if (oldVm?.postCompteStatus == Status.LOADING)
+                        {
+                          if (vm.postCompteStatus == Status.SUCCESS && vm.postedCompteId != null)
+                            {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => CompteDetailsScreen(vm.postedCompteId!)),
+                              )
+                            }
+                        }
+                    },
+                    builder: (context, vm) {
+                      final isLoading = vm.postCompteStatus == Status.LOADING;
+                      return OutlinedButton(
+                        onPressed: () => isLoading ? null : submit(vm),
+                        style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(16.0)),
+                        child: isLoading
+                            ? SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              )
+                            :  Text('Créer le compte'),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
@@ -122,5 +158,21 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
         ),
       ),
     );
+  }
+
+  void submit(CompteFormViewmodel vm) {
+    if (_selectedTypeDeCompte != null && _nomController.text.isNotEmpty && participants.isNotEmpty) {
+      vm.postCompte(
+        CompteDetails(
+          nom: _nomController.text,
+          typeDeCompte: _selectedTypeDeCompte!,
+          currencyCode: 'EUR',
+          transactions: [],
+          participants: participants,
+          totalDepenses: 0,
+          repartitionParDefaut: Repartition.EQUITABLE,
+        ),
+      );
+    }
   }
 }

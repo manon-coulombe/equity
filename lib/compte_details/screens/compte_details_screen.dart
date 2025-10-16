@@ -119,6 +119,12 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Loading');
+    return Center(
+      child: SizedBox(
+        height: 60,
+        width: 60,
+        child: CircularProgressIndicator(color: Color.fromRGBO(106, 208, 153, 1), strokeWidth: 6),
+      ),
+    );
   }
 }

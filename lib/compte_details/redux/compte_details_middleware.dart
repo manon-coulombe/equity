@@ -11,6 +11,7 @@ class CompteDetailsMiddlewares {
     final middlewares = CompteDetailsMiddlewares(compteDetailsRepository);
     return [
       TypedMiddleware<AppState, FetchCompteDetailsAction>(middlewares._onFetchCompteDetailsAction).call,
+      TypedMiddleware<AppState, PostCompteAction>(middlewares._onPostCompteAction).call,
       TypedMiddleware<AppState, PostTransactionAction>(middlewares._onPostTransactionAction).call,
     ];
   }
@@ -26,6 +27,21 @@ class CompteDetailsMiddlewares {
       store.dispatch(ProcessFetchCompteDetailsSuccessAction(result));
     }).onError((error) {
       store.dispatch(ProcessFetchCompteDetailsErrorAction(action.id));
+    });
+  }
+
+  Future<void> _onPostCompteAction(
+      Store<AppState> store,
+      PostCompteAction action,
+      NextDispatcher next,
+      ) async {
+    next(action);
+    final result = await compteDetailsRepository.postCompte(action.compte);
+    result.onSuccess((result) {
+      store.dispatch(ProcessPostCompteSuccessAction(compteId: result));
+      store.dispatch(FetchComptesAction());
+    }).onError((error) {
+      store.dispatch(ProcessPostCompteErrorAction());
     });
   }
 

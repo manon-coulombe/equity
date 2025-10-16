@@ -57,7 +57,7 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
   return compte == null
       ? null
       : CompteDetailsDisplaymodel(
-          id: compte.id,
+          id: compte.id!,
           titre: compte.nom,
           formattedTotal: '${compte.totalDepenses} ${compte.currencyCode}',
           formattedBalance: 'formattedBalance',
