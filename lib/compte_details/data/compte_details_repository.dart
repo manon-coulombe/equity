@@ -23,7 +23,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   final apiUrl = dotenv.env['API_URL'];
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
-    final url = Uri.parse('$apiUrl$compteId');
+    final url = Uri.parse('${apiUrl}compte/$compteId');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json", "Accept": "*/*"},

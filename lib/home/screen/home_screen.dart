@@ -21,40 +21,36 @@ class HomeScreen extends StatelessWidget {
         },
         builder: (context, vm) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: [
-              SizedBox(height: 80),
-              Text(
-                'equity',
-                style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
-              ),
-              SizedBox(height: 40),
-              BoutonAdd(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CompteFormScreen()),
-                  );
-                },
-              ),
-              SizedBox(height: 32),
-              Expanded(
-                child: ListView.builder(
-                  controller: controller,
-                  shrinkWrap: true,
-                  itemCount: vm.comptes.length,
-                  itemBuilder: (context, i) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        CompteCard(vm.comptes[i]),
-                        SizedBox(height: 24),
-                      ],
+          child: SingleChildScrollView(
+            controller: controller,
+            child: Column(
+              children: [
+                SizedBox(height: 80),
+                Text(
+                  'equity',
+                  style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
+                ),
+                SizedBox(height: 40),
+                BoutonAdd(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CompteFormScreen()),
                     );
                   },
                 ),
-              )
-            ],
+                SizedBox(height: 32),
+                ...vm.comptes.map(
+                  (compte) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      CompteCard(compte),
+                      SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
