@@ -19,7 +19,9 @@ void main() async {
       compteDetailsRepository: CompteDetailsRepository(),
     ),
     initialState: AppState(
-        homeState: HomeState(), comptesDetailsState: ComptesDetailsState()),
+      homeState: HomeState(),
+      comptesDetailsState: ComptesDetailsState(),
+    ),
   );
   runApp(App(store));
 }

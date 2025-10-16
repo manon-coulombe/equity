@@ -9,7 +9,9 @@ class HomeViewmodel extends Equatable {
   const HomeViewmodel({required this.comptes});
 
   factory HomeViewmodel.from(Store<AppState> store) {
-    return HomeViewmodel(comptes: store.state.homeState.comptes);
+    return HomeViewmodel(
+      comptes: store.state.homeState.comptes,
+    );
   }
 
   @override

@@ -72,7 +72,7 @@ TransactionDisplaymodel toTransactionDisplaymodel(Transaction transaction) {
   return TransactionDisplaymodel(
     id: transaction.id,
     titre: transaction.titre,
-    formattedDate: DateFormat('yyyy-MM-dd').format(transaction.date),
+    formattedDate: DateFormat('dd MMM yyyy').format(transaction.date),
     formattedMontant: '${transaction.montant} ${transaction.deviseCode}',
   );
 }

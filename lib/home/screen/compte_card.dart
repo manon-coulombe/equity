@@ -9,13 +9,21 @@ class CompteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MergeSemantics(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [BoxShadow(color: Color(0xFFE7ECFA), blurRadius: 16)],
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withValues(alpha: 0.2),
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         child: InkWell(
           highlightColor: Color(0xFFE7ECFA),
@@ -23,15 +31,14 @@ class CompteCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => CompteDetailsScreen(compte.id)),
+              MaterialPageRoute(builder: (context) => CompteDetailsScreen(compte.id)),
             );
           },
           child: Padding(
             padding: EdgeInsets.all(24),
             child: Text(
               compte.nom,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ),
         ),

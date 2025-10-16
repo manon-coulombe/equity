@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           store.dispatch(FetchComptesAction());
         },
         builder: (context, vm) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             controller: controller,
             child: Column(
@@ -40,15 +40,15 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 32),
-                ...vm.comptes.map(
-                  (compte) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      CompteCard(compte),
-                      SizedBox(height: 24),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: vm.comptes.isNotEmpty ? [
+                    ...vm.comptes.map(
+                      (compte) => CompteCard(compte),
+                    )
+                  ]  : [Center(child: Text('Pas encore de comptes', style: TextStyle(fontSize: 20)))],
                 ),
+                SizedBox(height: 32),
               ],
             ),
           ),

@@ -61,22 +61,22 @@ class Success extends StatelessWidget {
           );
         }),
         SizedBox(height: 32),
-        Divider(color: Colors.black),
         Expanded(
-          child: ListView.builder(
-            controller: controller,
-            shrinkWrap: true,
-            itemCount: transactionsDisplaymodels.length,
-            itemBuilder: (_, i) {
-              return Column(
-                children: [
-                  TransactionItem(transactionsDisplaymodels[i]),
-                  Divider(color: Colors.black),
-                ],
-              );
-            },
-          ),
+          child: transactionsDisplaymodels.isNotEmpty
+              ? ListView.builder(
+                  controller: controller,
+                  shrinkWrap: true,
+                  itemCount: transactionsDisplaymodels.length,
+                  itemBuilder: (_, i) {
+                    return TransactionItem(transactionsDisplaymodels[i]);
+                  },
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
+                  child: Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
+                ),
         ),
+        SizedBox(height: 16),
         Container(
           color: Color.fromRGBO(106, 208, 153, 1),
           padding: EdgeInsets.all(16),
