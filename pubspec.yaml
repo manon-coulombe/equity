@@ -18,6 +18,7 @@ dependencies:
   intl: ^0.20.1
   http: ^1.3.0
   flutter_dotenv: ^6.0.0
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -28,6 +29,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/equity.png
+    - assets/equity_android.png
     - assets/icons/
     - .env
   fonts:
@@ -55,3 +58,15 @@ flutter:
         - asset: assets/fonts/MPLUSRounded1c-Light.ttf
         - asset: assets/fonts/MPLUSRounded1c-Medium.ttf
         - asset: assets/fonts/MPLUSRounded1c-Regular.ttf
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#D64151"
+  image: assets/equity.png
+  fullscreen: true                # default false
+
+  android_12:
+    color: "#D64151"
+    image: assets/equity_android.png
+

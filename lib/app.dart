@@ -14,6 +14,7 @@ class App extends StatelessWidget {
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Raleway',
           useMaterial3: true,
