@@ -1,4 +1,5 @@
 import 'package:equity/home/screen/home_screen.dart';
+import 'package:equity/login_screen.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -16,12 +17,9 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromRGBO(255, 246, 245, 1),
           fontFamily: 'Raleway',
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Color(0xfffddddb),
-            brightness: Brightness.light,
-          ),
         ),
         title: 'Equity',
         home: HomeScreen(),

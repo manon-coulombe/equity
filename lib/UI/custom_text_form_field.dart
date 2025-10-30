@@ -22,7 +22,7 @@ class CustomTextFormField extends FormField<String?> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(label, style: TextStyle(fontSize: 18)),
-              SizedBox(height: 8),
+              SizedBox(height: 4),
               TextFormField(
                 textCapitalization: TextCapitalization.sentences,
                 keyboardType: keyboardType,
@@ -39,11 +39,11 @@ class CustomTextFormField extends FormField<String?> {
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: state.hasError ? Colors.red : Color(0xFF000000),
+                      color: state.hasError ? Colors.red : Colors.white,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
                       color: state.hasError ? Colors.red : Color(0xFF000000),
                     ),

@@ -62,11 +62,11 @@ flutter:
 flutter_native_splash:
   android: true
   ios: true
-  color: "#D64151"
+  color: "#FE6365"
   image: assets/equity.png
   fullscreen: true                # default false
 
   android_12:
-    color: "#D64151"
+    color: "#FE6365"
     image: assets/equity_android.png
 
