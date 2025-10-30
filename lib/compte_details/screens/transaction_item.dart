@@ -1,4 +1,5 @@
 import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
+import 'package:equity/compte_details/screens/transaction_details/transaction_details_displaymodel.dart';
 import 'package:equity/compte_details/screens/transaction_details/transaction_details_screen.dart';
 import 'package:flutter/material.dart';
 
