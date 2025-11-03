@@ -43,7 +43,7 @@ class CustomTextFormField extends FormField<String?> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
                       color: state.hasError ? Colors.red : Color(0xFF000000),
                     ),

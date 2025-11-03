@@ -1,4 +1,6 @@
 import 'package:equity/UI/custom_text_form_field.dart';
+import 'package:equity/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -14,88 +16,108 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void signUserIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(254, 99, 101, 1),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(253, 221, 219, 1),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/equity.svg',
-                width: 40,
-                height: 40,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Connexion',
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              CustomTextFormField(
-                controller: emailController,
-                label: 'Adresse e-mail',
-                errorMessage: 'Saisir l\'adresse e-mail',
-              ),
-              SizedBox(height: 16),
-              CustomTextFormField(
-                controller: passwordController,
-                label: 'Mot de passe',
-                errorMessage: 'Saisir le mot de passe',
-              ),
-              SizedBox(height: 8),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: InkWell(
-                  child: Text(
-                    'Mot de passe oublié',
-                    style: TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
-                  ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(254, 99, 101, 1),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(253, 221, 219, 1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/equity.svg',
+                      width: 40,
+                      height: 40,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Connexion',
+                      style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    CustomTextFormField(
+                      controller: emailController,
+                      label: 'Adresse e-mail',
+                      errorMessage: 'Saisir l\'adresse e-mail',
+                    ),
+                    SizedBox(height: 16),
+                    CustomTextFormField(
+                      controller: passwordController,
+                      label: 'Mot de passe',
+                      errorMessage: 'Saisir le mot de passe',
+                    ),
+                    SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: InkWell(
+                        child: Text(
+                          'Mot de passe oublié',
+                          style:
+                              TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    OutlinedButton(
+                      onPressed: () => signUserIn(),
+                      style: OutlinedButton.styleFrom(
+                          minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                          backgroundColor: Color.fromRGBO(106, 208, 153, 1),
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          side: BorderSide(width: 0)),
+                      child: const Text(
+                        'Se connecter',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Pas de compte ? '),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
+                          },
+                          child: Text(
+                            'S\'inscrire',
+                            style:
+                                TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
-              SizedBox(height: 24),
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                    backgroundColor: Color.fromRGBO(106, 208, 153, 1),
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    side: BorderSide(width: 0)),
-                child: const Text(
-                  'Se connecter',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Pas de compte ? '),
-                  InkWell(
-                    child: Text(
-                      'S\'inscrire',
-                      style: TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
-                    ),
-                  )
-                ],
-              )
-            ],
+            ),
           ),
         ),
       ),

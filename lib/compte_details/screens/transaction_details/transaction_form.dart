@@ -49,9 +49,9 @@ class _TransactionFormState extends State<TransactionForm> {
   Future<void> _selectDate() async {
     final pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime(2021, 7, 25),
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2022),
+      initialDate: selectedDate,
+      firstDate: DateTime(DateTime.now().year + 10),
+      lastDate: DateTime(DateTime.now().year + 10),
     );
 
     setState(() {
