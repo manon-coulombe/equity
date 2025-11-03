@@ -1,4 +1,3 @@
-import 'package:equity/UI/button_validate.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,18 +53,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: 'Mot de passe',
                 errorMessage: 'Saisir le mot de passe',
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 8),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: InkWell(
+                  child: Text(
+                    'Mot de passe oublié',
+                    style: TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24),
               OutlinedButton(
                 onPressed: () {},
                 style: OutlinedButton.styleFrom(
-                  minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                  backgroundColor: Color.fromRGBO(106, 208, 153, 1),
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                    side: BorderSide(width: 0)
-                ),
+                    minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                    backgroundColor: Color.fromRGBO(106, 208, 153, 1),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    side: BorderSide(width: 0)),
                 child: const Text(
                   'Se connecter',
                   style: TextStyle(
@@ -73,6 +81,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
+              SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Pas de compte ? '),
+                  InkWell(
+                    child: Text(
+                      'S\'inscrire',
+                      style: TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                    ),
+                  )
+                ],
               )
             ],
           ),
