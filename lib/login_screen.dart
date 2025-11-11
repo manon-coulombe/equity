@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   bool isLoading = false;
   bool isError = false;
+  bool showPassword = false;
   late String errorMessage;
 
   void signUserIn() async {
@@ -108,10 +109,46 @@ class _LoginScreenState extends State<LoginScreen> {
                       errorMessage: 'Saisir l\'adresse e-mail',
                     ),
                     SizedBox(height: 16),
-                    CustomTextFormField(
-                      controller: passwordController,
-                      label: 'Mot de passe',
-                      errorMessage: 'Saisir le mot de passe',
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mot de passe', style: TextStyle(fontSize: 18)),
+                        SizedBox(height: 4),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          onTapOutside: (_) {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                          controller: passwordController,
+                          obscureText: !showPassword,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                icon: Icon(
+                                  showPassword ? Icons.visibility : Icons.visibility_off,
+                                  color: Colors.black38,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                }),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Color(0xFF000000),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(height: 8),
                     Align(
@@ -119,8 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: InkWell(
                         child: Text(
                           'Mot de passe oublié',
-                          style:
-                              TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                          style: TextStyle(
+                            color: Color.fromRGBO(77, 129, 231, 1),
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                     ),
