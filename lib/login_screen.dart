@@ -15,12 +15,52 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isLoading = false;
+  bool isError = false;
+  late String errorMessage;
 
   void signUserIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    );
+    setState(() {
+      isLoading = true;
+      isError = false;
+    });
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        isError = true;
+      });
+      if (e.code == 'invalid-credential' || e.code == 'user-not-found' || e.code == 'wrong-password') {
+        setState(() {
+          errorMessage = 'E-mail ou mot de passe incorrect';
+        });
+      } else if (e.code == 'invalid-email') {
+        setState(() {
+          errorMessage = 'Adresse e-mail invalide';
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Une erreur est survenue';
+        });
+        print(e);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        isError = true;
+        errorMessage = 'Une erreur est survenue';
+        isLoading = false;
+      });
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -55,7 +95,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
+                    if (isError)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(errorMessage, textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
+                      )
+                    else
+                      SizedBox(height: 32),
                     CustomTextFormField(
                       controller: emailController,
                       label: 'Adresse e-mail',
@@ -89,13 +135,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           side: BorderSide(width: 0)),
-                      child: const Text(
-                        'Se connecter',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: isLoading
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text(
+                              'Se connecter',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     ),
                     SizedBox(height: 24),
                     Row(

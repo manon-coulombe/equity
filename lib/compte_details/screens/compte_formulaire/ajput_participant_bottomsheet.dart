@@ -29,7 +29,8 @@ class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomshee
       key: _formKey,
       child: SizedBox.expand(
         child: Center(
-          child: Padding(
+          child: Container(
+            color: Color.fromRGBO(255, 246, 245, 1),
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
