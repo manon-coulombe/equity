@@ -1,5 +1,6 @@
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   DateTime selectedBirthDate = DateTime(1990);
+  bool isLoading = false;
+  bool isError = false;
+  bool showPassword = false;
+  late String errorMessage;
 
   Future<void> _selectBirthDate() async {
     final pickedDate = await showDatePicker(
@@ -30,6 +35,54 @@ class _SignupScreenState extends State<SignupScreen> {
       if (pickedDate != null) {
         selectedBirthDate = pickedDate;
       }
+    });
+  }
+
+  void _registerUser() async {
+    setState(() {
+      isLoading = true;
+      isError = false;
+    });
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        isError = true;
+      });
+      if (e.code == 'weak-password') {
+        setState(() {
+          errorMessage = 'Le mot de passe est trop faible';
+        });
+      } else if (e.code == 'email-already-in-use') {
+        setState(() {
+          errorMessage = 'L\'adresse e-mail est déjà associée à un compte';
+        });
+      } else if (e.code == 'invalid-email') {
+        setState(() {
+          errorMessage = 'Adresse e-mail invalide';
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Une erreur est survenue';
+        });
+        print(e);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        isError = true;
+        errorMessage = 'Une erreur est survenue';
+        isLoading = false;
+      });
+    }
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -60,15 +113,21 @@ class _SignupScreenState extends State<SignupScreen> {
                       style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
+                    if (isError)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(errorMessage, textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
+                      )
+                    else
+                      SizedBox(height: 32),
                     CustomTextFormField(
-                      controller: emailController,
+                      controller: nameController,
                       label: 'Nom',
                       errorMessage: 'Saisir le nom',
                     ),
                     SizedBox(height: 8),
                     CustomTextFormField(
-                      controller: emailController,
+                      controller: firstNameController,
                       label: 'Prénom',
                       errorMessage: 'Saisir le prénom',
                     ),
@@ -118,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () => _registerUser(),
                       style: OutlinedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 50),
                           backgroundColor: Color.fromRGBO(106, 208, 153, 1),
@@ -127,13 +186,19 @@ class _SignupScreenState extends State<SignupScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           side: BorderSide(width: 0)),
-                      child: const Text(
-                        'S\'inscrire',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: isLoading
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text(
+                              'S\'inscrire',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     ),
                     SizedBox(height: 24),
                     Row(
@@ -146,7 +211,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                           child: Text(
                             'Se connecter',
-                            style: TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                            style: TextStyle(
+                              color: Color.fromRGBO(77, 129, 231, 1),
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         )
                       ],

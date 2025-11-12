@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
   late String errorMessage;
 
-  void signUserIn() async {
+  void _logUserIn() async {
     setState(() {
       isLoading = true;
       isError = false;
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: () => signUserIn(),
+                      onPressed: () => _logUserIn(),
                       style: OutlinedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 50),
                           backgroundColor: Color.fromRGBO(106, 208, 153, 1),
