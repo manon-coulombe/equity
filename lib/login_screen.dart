@@ -1,11 +1,13 @@
 import 'package:equity/UI/custom_text_form_field.dart';
-import 'package:equity/signup_screen.dart';
+import 'package:equity/UI/password_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final Function() onTap;
+
+  const LoginScreen({super.key, required this.onTap});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -114,40 +116,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text('Mot de passe', style: TextStyle(fontSize: 18)),
                         SizedBox(height: 4),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          onTapOutside: (_) {
-                            FocusManager.instance.primaryFocus?.unfocus();
+                        PasswordFormField(
+                          passwordController: passwordController,
+                          showPassword: showPassword,
+                          setShowPassword: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
                           },
-                          controller: passwordController,
-                          obscureText: !showPassword,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                icon: Icon(
-                                  showPassword ? Icons.visibility : Icons.visibility_off,
-                                  color: Colors.black38,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                }),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-                            fillColor: Colors.white,
-                            filled: true,
-                          ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -194,13 +171,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text('Pas de compte ? '),
                         InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
-                          },
+                          onTap: widget.onTap,
                           child: Text(
                             'S\'inscrire',
-                            style:
-                                TextStyle(color: Color.fromRGBO(77, 129, 231, 1), decoration: TextDecoration.underline),
+                            style: TextStyle(
+                              color: Color.fromRGBO(77, 129, 231, 1),
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         )
                       ],

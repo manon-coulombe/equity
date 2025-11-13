@@ -1,12 +1,12 @@
 import 'package:equity/UI/custom_text_form_field.dart';
-import 'package:equity/login_screen.dart';
+import 'package:equity/UI/password_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  final Function() onTap;
+
+  const SignupScreen({super.key, required this.onTap});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -18,25 +18,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final firstNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  DateTime selectedBirthDate = DateTime(1990);
+  final confirmPasswordController = TextEditingController();
   bool isLoading = false;
   bool isError = false;
   bool showPassword = false;
+  bool showConfirmPassword = false;
   late String errorMessage;
-
-  Future<void> _selectBirthDate() async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedBirthDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    setState(() {
-      if (pickedDate != null) {
-        selectedBirthDate = pickedDate;
-      }
-    });
-  }
 
   void _registerUser() async {
     setState(() {
@@ -44,10 +31,16 @@ class _SignupScreenState extends State<SignupScreen> {
       isError = false;
     });
     try {
+      if (passwordController.text == confirmPasswordController.text) {
+
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+      } else {
+        isError = true;
+        errorMessage = 'Les mots de passe doivent être identiques';
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         isError = true;
@@ -121,59 +114,43 @@ class _SignupScreenState extends State<SignupScreen> {
                     else
                       SizedBox(height: 32),
                     CustomTextFormField(
-                      controller: nameController,
-                      label: 'Nom',
-                      errorMessage: 'Saisir le nom',
-                    ),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      controller: firstNameController,
-                      label: 'Prénom',
-                      errorMessage: 'Saisir le prénom',
-                    ),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
                       controller: emailController,
                       label: 'Adresse e-mail',
                       errorMessage: 'Saisir l\'adresse e-mail',
                     ),
                     SizedBox(height: 8),
-                    Text('Date de naissance', style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 4),
-                    InkWell(
-                      onTap: _selectBirthDate,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mot de passe', style: TextStyle(fontSize: 18)),
+                        SizedBox(height: 4),
+                        PasswordFormField(
+                          passwordController: passwordController,
+                          showPassword: showPassword,
+                          setShowPassword: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(18),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                DateFormat('dd/MM/yyyy').format(selectedBirthDate),
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Semantics(
-                                excludeSemantics: true,
-                                child: SvgPicture.asset(
-                                  'assets/icons/calendar.svg',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
                     SizedBox(height: 8),
-                    CustomTextFormField(
-                      controller: passwordController,
-                      label: 'Mot de passe',
-                      errorMessage: 'Saisir le mot de passe',
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Confirmation du mot de passe', style: TextStyle(fontSize: 18)),
+                        SizedBox(height: 4),
+                        PasswordFormField(
+                          passwordController: confirmPasswordController,
+                          showPassword: showConfirmPassword,
+                          setShowPassword: () {
+                            setState(() {
+                              showConfirmPassword = !showConfirmPassword;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                     SizedBox(height: 24),
                     OutlinedButton(
@@ -206,9 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       children: [
                         Text('Vous avez déjà un compte ? '),
                         InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                          },
+                          onTap: widget.onTap,
                           child: Text(
                             'Se connecter',
                             style: TextStyle(
@@ -216,9 +191,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               decoration: TextDecoration.underline,
                             ),
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
