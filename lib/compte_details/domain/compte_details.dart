@@ -11,6 +11,7 @@ class CompteDetails extends Equatable {
   final List<Transaction> transactions;
   final double totalDepenses;
   final Repartition repartitionParDefaut;
+  final List<Balance> balance;
 
   const CompteDetails({
     this.id,
@@ -21,6 +22,7 @@ class CompteDetails extends Equatable {
     required this.participants,
     required this.totalDepenses,
     required this.repartitionParDefaut,
+    this.balance = const [],
   });
 
   @override
@@ -33,6 +35,7 @@ class CompteDetails extends Equatable {
         transactions,
         totalDepenses,
         repartitionParDefaut,
+        balance,
       ];
 }
 
@@ -57,4 +60,15 @@ enum Repartition {
   final int id;
 
   const Repartition(this.label, this.id);
+}
+
+class Balance extends Equatable {
+  final String participant;
+  final double solde;
+
+  const Balance({required this.participant, required this.solde});
+
+  @override
+  List<Object?> get props => [participant, solde];
+
 }

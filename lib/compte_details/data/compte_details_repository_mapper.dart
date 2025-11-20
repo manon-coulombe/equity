@@ -4,6 +4,7 @@ import 'package:equity/compte_details/domain/transaction.dart';
 
 extension CompteJsonMapper on Map<String, dynamic> {
   CompteDetails toCompteDetails() {
+    print(this);
     final typeDeCompte = _getTypeDeCompte(this['type']?['nom']);
     final transactions = _getTransactions(this['transactions']);
     final participants = _getParticipants(this['participants']);
@@ -19,7 +20,14 @@ extension CompteJsonMapper on Map<String, dynamic> {
       participants: participants,
       totalDepenses: this['totalMontant'].toDouble(),
       repartitionParDefaut: Repartition.EQUITABLE,
+      balance: _getBalance(this['balance']),
     );
+  }
+
+  List<Balance> _getBalance(List<dynamic> list) {
+    return list
+        .map((b) => Balance(participant: b['participant'].toString(), solde: b['solde'].toDouble() as double))
+        .toList();
   }
 
   TypeDeCompte _getTypeDeCompte(String? type) {

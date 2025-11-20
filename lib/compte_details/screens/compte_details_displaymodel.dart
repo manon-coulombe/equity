@@ -12,6 +12,7 @@ class CompteDetailsDisplaymodel extends Equatable {
   final List<Participant> participants;
   final String currencyCode;
   final Repartition repartitionParDefaut;
+  final List<Balance> balance;
 
   const CompteDetailsDisplaymodel({
     required this.id,
@@ -22,6 +23,7 @@ class CompteDetailsDisplaymodel extends Equatable {
     required this.participants,
     required this.currencyCode,
     required this.repartitionParDefaut,
+    required this.balance,
   });
 
   @override
@@ -32,6 +34,7 @@ class CompteDetailsDisplaymodel extends Equatable {
         formattedBalance,
         transactionsDisplaymodels,
         participants,
+        balance,
       ];
 }
 
@@ -47,6 +50,6 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
           participants: compte.participants,
           currencyCode: compte.currencyCode,
           repartitionParDefaut: compte.repartitionParDefaut,
+          balance: compte.balance,
         );
 }
-
