@@ -148,7 +148,7 @@ extension TransactionMapper on Transaction {
     return {
       'nom': titre,
       'montant': montant.toString(),
-      'devise': devise,
+      'devise': devise.code,
       'date': date.toString(),
       'compte_id': compteId,
       'type_id': _toTypeId(),

@@ -48,12 +48,12 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
           formattedBalance: 'formattedBalance',
           transactionsDisplaymodels: compte.transactions.map((trs) => toTransactionDisplaymodel(trs)).toList(),
           participants: compte.participants,
-          currencyCode: compte.currency.symbol,
+          currencyCode: compte.currency.code,
           repartitionParDefaut: compte.repartitionParDefaut,
           balance: compte.balance.map(
                 (b) => BalanceDisplayModel(
                   participant: b.participant,
-                  formattedSolde: '${b.solde} ${compte.currency.symbol}'.replaceAll('.', ','),
+                  formattedSolde: '${b.solde.toStringAsFixed(2)} ${compte.currency.symbol}'.replaceAll('.', ','),
                 ),
               ).toList(),
         );
