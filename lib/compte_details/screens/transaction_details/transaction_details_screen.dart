@@ -57,7 +57,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                   children: [
                     Text(
                       dm.payeur,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       textAlign: TextAlign.start,
                     ),
                     Text(

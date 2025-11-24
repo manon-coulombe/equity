@@ -51,7 +51,11 @@ class _CompteDetailsScreenState extends State<CompteDetailsScreen> with TickerPr
             centerTitle: true,
             bottom: TabBar(
               controller: _tabController,
-              tabs: const <Widget>[
+              labelStyle: TextStyle(fontSize: 18, fontFamily: 'Raleway', fontWeight: FontWeight.w600),
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.black,
+              unselectedLabelStyle: TextStyle(fontSize: 16, fontFamily: 'Raleway', fontWeight: FontWeight.w500),
+              tabs: const [
                 Tab(text: 'Transactions'),
                 Tab(text: 'Répartition'),
               ],
@@ -143,8 +147,8 @@ class RepartitionItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(balance.participant),
-              Text(balance.formattedSolde, style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(balance.participant, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              Text(balance.formattedSolde, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             ],
           ),
         ),
