@@ -1,3 +1,4 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
@@ -166,7 +167,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
         CompteDetails(
           nom: _nomController.text,
           typeDeCompte: _selectedTypeDeCompte!,
-          currencyCode: 'EUR',
+          currency: CurrencyService().findByCode('eur') ?? CurrencyService().getAll().first,
           transactions: [],
           participants: participants,
           totalDepenses: 0,

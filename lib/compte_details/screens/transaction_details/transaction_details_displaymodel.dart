@@ -28,10 +28,10 @@ TransactionDisplaymodel toTransactionDisplaymodel(Transaction transaction) {
     id: transaction.id,
     titre: transaction.titre,
     formattedDate: DateFormat('dd MMM yyyy').format(transaction.date),
-    formattedMontant: '${transaction.montant} ${transaction.deviseCode}',
+    formattedMontant: '${transaction.montant} ${transaction.devise.symbol}'.replaceAll('.', ','),
     payeur: transaction is Depense ? transaction.payeur.nom : 'todo',
     repartition: transaction is Depense
-        ? transaction.repartition.map((p, m) => MapEntry(p.nom, '${m.toString()} ${transaction.deviseCode}'))
+        ? transaction.repartition.map((p, m) => MapEntry(p.nom, '${m.toString()} ${transaction.devise.symbol}'.replaceAll('.', ',')))
         : null,
   );
 }

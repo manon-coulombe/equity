@@ -1,3 +1,4 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:equatable/equatable.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 
@@ -5,19 +6,19 @@ abstract class Transaction extends Equatable {
   final int? id;
   final String titre;
   final double montant;
-  final String deviseCode;
+  final Currency devise;
   final DateTime date;
 
   const Transaction({
     this.id,
     required this.titre,
     required this.montant,
-    required this.deviseCode,
+    required this.devise,
     required this.date,
   });
 
   @override
-  List<Object?> get props => [id, titre, montant, deviseCode, date];
+  List<Object?> get props => [id, titre, montant, devise, date];
 }
 
 class Depense extends Transaction {
@@ -28,7 +29,7 @@ class Depense extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.deviseCode,
+    required super.devise,
     required super.date,
     required this.payeur,
     required this.repartition,
@@ -43,7 +44,7 @@ class Revenu extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.deviseCode,
+    required super.devise,
     required super.date,
     required this.receveur,
     required this.repartition,
@@ -58,7 +59,7 @@ class Transfert extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.deviseCode,
+    required super.devise,
     required super.date,
     required this.payeur,
     required this.receveur,

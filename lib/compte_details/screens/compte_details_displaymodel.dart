@@ -12,7 +12,7 @@ class CompteDetailsDisplaymodel extends Equatable {
   final List<Participant> participants;
   final String currencyCode;
   final Repartition repartitionParDefaut;
-  final List<Balance> balance;
+  final List<BalanceDisplayModel> balance;
 
   const CompteDetailsDisplaymodel({
     required this.id,
@@ -44,12 +44,27 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
       : CompteDetailsDisplaymodel(
           id: compte.id!,
           titre: compte.nom,
-          formattedTotal: '${compte.totalDepenses} ${compte.currencyCode}',
+          formattedTotal: '${compte.totalDepenses} ${compte.currency.symbol}'.replaceAll('.', ','),
           formattedBalance: 'formattedBalance',
           transactionsDisplaymodels: compte.transactions.map((trs) => toTransactionDisplaymodel(trs)).toList(),
           participants: compte.participants,
-          currencyCode: compte.currencyCode,
+          currencyCode: compte.currency.symbol,
           repartitionParDefaut: compte.repartitionParDefaut,
-          balance: compte.balance,
+          balance: compte.balance.map(
+                (b) => BalanceDisplayModel(
+                  participant: b.participant,
+                  formattedSolde: '${b.solde} ${compte.currency.symbol}'.replaceAll('.', ','),
+                ),
+              ).toList(),
         );
+}
+
+class BalanceDisplayModel extends Equatable {
+  final String participant;
+  final String formattedSolde;
+
+  const BalanceDisplayModel({required this.participant, required this.formattedSolde});
+
+  @override
+  List<Object?> get props => [participant, formattedSolde];
 }

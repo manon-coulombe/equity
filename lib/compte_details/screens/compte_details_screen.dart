@@ -1,4 +1,5 @@
 import 'package:equity/UI/bouton_add.dart';
+import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
 import 'package:equity/compte_details/screens/compte_details_viewmodel.dart';
 import 'package:equity/compte_details/screens/transaction_details/transaction_form.dart';
 import 'package:equity/compte_details/screens/transaction_item.dart';
@@ -106,15 +107,48 @@ class RepartitionTabSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...vm.compteDetails!.balance.map((b) => Row(
-              children: [
-                Text(b.participant),
-                Text(b.solde.toString()),
-              ],
-            )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+      child: Column(
+        children: [
+          Text('Total des dépenses', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          Text(vm.compteDetails!.formattedTotal, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+          SizedBox(height: 16),
+          ...vm.compteDetails!.balance.map(
+            (b) => RepartitionItem(balance: b),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RepartitionItem extends StatelessWidget {
+  final BalanceDisplayModel balance;
+
+  const RepartitionItem({super.key, required this.balance});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(254, 236, 235, 1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(balance.participant),
+              Text(balance.formattedSolde, style: TextStyle(fontWeight: FontWeight.w600)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -152,30 +186,30 @@ class TransactionsTabSuccess extends StatelessWidget {
                 )
               : Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
         ),
-        SizedBox(height: 16),
-        Container(
-          color: Color.fromRGBO(106, 208, 153, 1),
-          padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                  Text(vm.compteDetails!.formattedTotal),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                  Text(vm.compteDetails!.formattedBalance),
-                ],
-              )
-            ],
-          ),
-        )
+        // SizedBox(height: 16),
+        // Container(
+        //   color: Color.fromRGBO(106, 208, 153, 1),
+        //   padding: EdgeInsets.all(16),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        //           Text(vm.compteDetails!.formattedTotal),
+        //         ],
+        //       ),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.end,
+        //         children: [
+        //           Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        //           Text(vm.compteDetails!.formattedBalance),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

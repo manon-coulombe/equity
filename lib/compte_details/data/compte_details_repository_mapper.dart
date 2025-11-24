@@ -1,3 +1,4 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
@@ -15,7 +16,7 @@ extension CompteJsonMapper on Map<String, dynamic> {
       id: this['id'],
       nom: this['nom'],
       typeDeCompte: typeDeCompte,
-      currencyCode: this['devise'],
+      currency: CurrencyService().findByCode(this['devise']) ?? CurrencyService().getAll().first,
       transactions: transactions,
       participants: participants,
       totalDepenses: this['totalMontant'].toDouble(),
@@ -46,7 +47,7 @@ extension CompteJsonMapper on Map<String, dynamic> {
           final id = map['id'];
           final nom = map['nom'];
           final montant = map['montant'].toDouble();
-          final deviseCode = map['devise'];
+          final devise = CurrencyService().findByCode(map['devise']) ?? CurrencyService().getAll().first;
           final date = DateTime.parse(map['date']);
           final payeur = Participant(
             id: map['payeur']['id'],
@@ -59,7 +60,7 @@ extension CompteJsonMapper on Map<String, dynamic> {
                 id: id,
                 titre: nom,
                 montant: montant,
-                deviseCode: deviseCode,
+                devise: devise,
                 date: date,
                 payeur: payeur,
                 repartition: _getRepartition(map['repartitions']),
@@ -68,7 +69,7 @@ extension CompteJsonMapper on Map<String, dynamic> {
                 id: id,
                 titre: nom,
                 montant: montant,
-                deviseCode: deviseCode,
+                devise: devise,
                 date: date,
                 receveur: payeur,
                 repartition: _getRepartition(map['repartitions']),
@@ -77,7 +78,7 @@ extension CompteJsonMapper on Map<String, dynamic> {
                 id: map['id'],
                 titre: map['nom'],
                 montant: montant,
-                deviseCode: deviseCode,
+                devise: devise,
                 date: date,
                 payeur: payeur,
                 receveur: _getReceveur(map['repartitions'], payeur.id!),
@@ -134,7 +135,7 @@ extension CompteDetailsMapper on CompteDetails {
   Object toCompteJson() {
     return {
       'nom': nom,
-      'devise': currencyCode,
+      'devise': currency,
       'type_id': typeDeCompte.id,
       'repartition_id': repartitionParDefaut.id,
       'participants': participants.map((p) => p.toParticipantJson(id)).toList(),
@@ -147,7 +148,7 @@ extension TransactionMapper on Transaction {
     return {
       'nom': titre,
       'montant': montant.toString(),
-      'devise': deviseCode,
+      'devise': devise,
       'date': date.toString(),
       'compte_id': compteId,
       'type_id': _toTypeId(),

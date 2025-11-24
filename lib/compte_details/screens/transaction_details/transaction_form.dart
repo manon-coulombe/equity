@@ -26,7 +26,7 @@ class _TransactionFormState extends State<TransactionForm> {
   final _formKey = GlobalKey<FormState>();
   final titreController = TextEditingController();
   final montantController = TextEditingController();
-  Currency? selectedCurrency;
+  late Currency selectedCurrency;
   List<Currency> currencies = [];
   DateTime selectedDate = DateTime.now();
   late Participant selectedPayeur;
@@ -165,7 +165,7 @@ class _TransactionFormState extends State<TransactionForm> {
                             isExpanded: true,
                             onChanged: (Currency? newValue) {
                               setState(() {
-                                selectedCurrency = newValue;
+                                selectedCurrency = newValue ?? selectedCurrency;
                               });
                             },
                             items: currencies.map<DropdownMenuItem<Currency>>((currency) {
@@ -309,7 +309,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   Text(
-                                    '${repartitions[participant].toString()} ${selectedCurrency!.symbol}',
+                                    '${repartitions[participant].toString()} ${selectedCurrency.symbol}',
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ],
@@ -345,7 +345,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               transaction: Depense(
                                 titre: titreController.text,
                                 montant: double.parse(montantController.text.replaceAll(',', '.')),
-                                deviseCode: selectedCurrency!.code,
+                                devise: selectedCurrency,
                                 date: selectedDate,
                                 payeur: selectedPayeur,
                                 repartition: repartitions,

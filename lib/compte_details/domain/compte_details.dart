@@ -1,3 +1,4 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:equatable/equatable.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
@@ -6,7 +7,7 @@ class CompteDetails extends Equatable {
   final int? id;
   final String nom;
   final TypeDeCompte typeDeCompte;
-  final String currencyCode;
+  final Currency currency;
   final List<Participant> participants;
   final List<Transaction> transactions;
   final double totalDepenses;
@@ -17,7 +18,7 @@ class CompteDetails extends Equatable {
     this.id,
     required this.nom,
     required this.typeDeCompte,
-    required this.currencyCode,
+    required this.currency,
     required this.transactions,
     required this.participants,
     required this.totalDepenses,
@@ -30,7 +31,7 @@ class CompteDetails extends Equatable {
         nom,
         id,
         typeDeCompte,
-        currencyCode,
+        currency,
         participants,
         transactions,
         totalDepenses,
