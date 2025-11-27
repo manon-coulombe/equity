@@ -38,7 +38,6 @@ class _TransactionFormState extends State<TransactionForm> {
   void initState() {
     super.initState();
     currencies = CurrencyService().getAll();
-    montantController.text = '0';
     selectedPayeur = widget.compteDetails.participants.first;
     selectedCurrency = currencies.firstWhere((c) => c.code == widget.compteDetails.currencyCode);
     selectedRepartition = widget.compteDetails.repartitionParDefaut;
@@ -124,71 +123,74 @@ class _TransactionFormState extends State<TransactionForm> {
                   CustomTextFormField(
                     controller: titreController,
                     label: 'Titre',
-                    errorMessage: 'Saisir le titre',
+                    emptyErrorMessage: 'Saisir le titre',
+                    customValidator: (value) {
+                      if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
+                        return "Saisir uniquement des chiffres";
+                      }
+                      return null;
+                    },
                   ),
-                  SizedBox(height: 24),
-                  Text('Montant', style: TextStyle(fontSize: 18)),
-                  SizedBox(height: 8),
+                  SizedBox(height: 4),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
-                        child: TextFormField(
-                            controller: montantController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Veuillez saisir le montant';
-                              }
-                              return null;
-                            },
-                            onChanged: (_) {
-                              _setRepartion();
-                            },
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                              fillColor: Colors.white,
-                              filled: true,
-                            )),
+                        child: CustomTextFormField(
+                          label: 'Montant',
+                          controller: montantController,
+                          emptyErrorMessage: 'Saisir le montant',
+                          keyboardType: TextInputType.number,
+                          onChange: _setRepartion,
+                          customValidator: (value) {
+                            if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                              return "Saisir uniquement des chiffres";
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       SizedBox(width: 16),
                       SizedBox(
                         width: 120,
-                        child: DropdownButtonFormField<Currency>(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                              fillColor: Colors.white,
-                              filled: true,
-                            ),
-                            value: selectedCurrency,
-                            hint: Text("Choisir une devise"),
-                            isExpanded: true,
-                            onChanged: (Currency? newValue) {
-                              setState(() {
-                                selectedCurrency = newValue ?? selectedCurrency;
-                              });
-                            },
-                            items: currencies.map<DropdownMenuItem<Currency>>((currency) {
-                              return DropdownMenuItem(
-                                value: currency,
-                                child: Text(
-                                  "${currency.name} (${currency.symbol})",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-                                ),
-                              );
-                            }).toList(),
-                            selectedItemBuilder: (context) {
-                              return currencies.map((currency) {
-                                return Text(
-                                  currency.symbol,
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: DropdownButtonFormField<Currency>(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                fillColor: Colors.white,
+                                filled: true,
+                              ),
+                              value: selectedCurrency,
+                              hint: Text("Choisir une devise"),
+                              isExpanded: true,
+                              onChanged: (Currency? newValue) {
+                                setState(() {
+                                  selectedCurrency = newValue ?? selectedCurrency;
+                                });
+                              },
+                              items: currencies.map<DropdownMenuItem<Currency>>((currency) {
+                                return DropdownMenuItem(
+                                  value: currency,
+                                  child: Text(
+                                    "${currency.name} (${currency.symbol})",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                                  ),
                                 );
-                              }).toList();
-                            }),
+                              }).toList(),
+                              selectedItemBuilder: (context) {
+                                return currencies.map((currency) {
+                                  return Text(
+                                    currency.symbol,
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                                  );
+                                }).toList();
+                              }),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 4),
                   Text('Date', style: TextStyle(fontSize: 18)),
                   SizedBox(height: 8),
                   InkWell(

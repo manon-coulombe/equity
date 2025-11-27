@@ -116,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     CustomTextFormField(
                       controller: emailController,
                       label: 'Adresse e-mail',
-                      errorMessage: 'Saisir l\'adresse e-mail',
+                      emptyErrorMessage: 'Saisir l\'adresse e-mail',
                     ),
                     SizedBox(height: 8),
                     Column(

@@ -54,22 +54,24 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: TypeDeCompte.values
-                        .map((type) => TypeDeCompteCard(
-                              label: type.label,
-                              isSelected: _selectedTypeDeCompte == type,
-                              select: () {
-                                setState(() {
-                                  _selectedTypeDeCompte = type;
-                                });
-                              },
-                            ))
+                        .map(
+                          (type) => TypeDeCompteCard(
+                            label: type.label,
+                            isSelected: _selectedTypeDeCompte == type,
+                            select: () {
+                              setState(() {
+                                _selectedTypeDeCompte = type;
+                              });
+                            },
+                          ),
+                        )
                         .toList(),
                   ),
                   SizedBox(height: 40),
                   CustomTextFormField(
                     controller: _nomController,
                     label: 'Nom du compte',
-                    errorMessage: 'Saisir le nom du compte',
+                    emptyErrorMessage: 'Saisir le nom du compte',
                   ),
                   SizedBox(height: 40),
                   Row(
@@ -133,7 +135,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) => CompteDetailsScreen(vm.postedCompteId!)),
-                              )
+                              ),
                             }
                         }
                     },
@@ -148,7 +150,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                                 width: 20,
                                 child: CircularProgressIndicator(),
                               )
-                            :  Text('Créer le compte'),
+                            : Text('Créer le compte'),
                       );
                     },
                   )
@@ -162,7 +164,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
   }
 
   void submit(CompteFormViewmodel vm) {
-    if (_selectedTypeDeCompte != null && _nomController.text.isNotEmpty && participants.isNotEmpty) {
+    if (_formKey.currentState!.validate()) {
       vm.postCompte(
         CompteDetails(
           nom: _nomController.text,

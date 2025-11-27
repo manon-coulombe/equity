@@ -3,19 +3,28 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends FormField<String?> {
   final String label;
   final TextEditingController controller;
-  final String errorMessage;
+  final String emptyErrorMessage;
   final TextInputType keyboardType;
+  final Function? customValidator;
+  final Function? onChange;
 
   CustomTextFormField({
     super.key,
     required this.label,
     required this.controller,
-    required this.errorMessage,
+    required this.emptyErrorMessage,
     this.keyboardType = TextInputType.text,
+    this.customValidator,
+    this.onChange,
   }) : super(
           validator: (_) {
             if (controller.text.isEmpty) {
-              return errorMessage;
+              return emptyErrorMessage;
+            }
+
+            if (customValidator != null) {
+              final error = customValidator(controller.text);
+              if (error != null) return error;
             }
             return null;
           },
@@ -33,6 +42,7 @@ class CustomTextFormField extends FormField<String?> {
                   },
                   controller: controller,
                   onChanged: (_) {
+                    onChange?.call();
                     if (state.hasError) {
                       state.validate();
                     }
@@ -41,13 +51,13 @@ class CustomTextFormField extends FormField<String?> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: state.hasError ? Colors.red : Colors.white,
+                        color: state.hasError ? Color.fromRGBO(208, 1, 4, 1) :  Color(0xFF000000),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: state.hasError ? Colors.red : Color(0xFF000000),
+                        color: state.hasError ? Color.fromRGBO(208, 1, 4, 1) : Color(0xFF000000),
                       ),
                     ),
                     fillColor: Colors.white,
@@ -57,8 +67,10 @@ class CustomTextFormField extends FormField<String?> {
                 if (state.hasError && state.errorText != null)
                   Text(
                     state.errorText!,
-                    style: TextStyle(color: Colors.red),
-                  ),
+                    style: TextStyle(color: Color.fromRGBO(208, 1, 4, 1)),
+                  )
+                else
+                  SizedBox(height: 20)
               ],
             );
           },

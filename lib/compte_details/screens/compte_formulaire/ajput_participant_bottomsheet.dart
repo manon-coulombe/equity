@@ -46,13 +46,13 @@ class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomshee
                 CustomTextFormField(
                   label: 'Nom',
                   controller: _nomController,
-                  errorMessage: 'Saisir le nom',
+                  emptyErrorMessage: 'Saisir le nom',
                 ),
                 SizedBox(height: 32),
                 CustomTextFormField(
                   label: 'Revenus nets par mois',
                   controller: _revenusController,
-                  errorMessage: 'Saisir les revenus',
+                  emptyErrorMessage: 'Saisir les revenus',
                   keyboardType: TextInputType.number,
                 ),
                 SizedBox(height: 32),

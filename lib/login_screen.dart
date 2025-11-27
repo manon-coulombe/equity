@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomTextFormField(
                       controller: emailController,
                       label: 'Adresse e-mail',
-                      errorMessage: 'Saisir l\'adresse e-mail',
+                      emptyErrorMessage: 'Saisir l\'adresse e-mail',
                     ),
                     SizedBox(height: 16),
                     Column(
