@@ -32,11 +32,10 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     try {
       if (passwordController.text == confirmPasswordController.text) {
-
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
       } else {
         isError = true;
         errorMessage = 'Les mots de passe doivent être identiques';
@@ -117,6 +116,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       controller: emailController,
                       label: 'Adresse e-mail',
                       emptyErrorMessage: 'Saisir l\'adresse e-mail',
+                      customValidator: (value) {
+                        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value)) {
+                          return "Format invalide";
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 8),
                     Column(
@@ -132,6 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               showPassword = !showPassword;
                             });
                           },
+                          validatePasswordInit: true,
                         ),
                       ],
                     ),
@@ -154,7 +161,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: () => _registerUser(),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _registerUser();
+                        }
+                      },
                       style: OutlinedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 50),
                           backgroundColor: Color.fromRGBO(106, 208, 153, 1),

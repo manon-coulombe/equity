@@ -67,6 +67,7 @@ class CustomTextFormField extends FormField<String?> {
                   ),
                   inputFormatters: inputFormatters,
                 ),
+                SizedBox(height: 4),
                 if (state.hasError && state.errorText != null)
                   Text(
                     state.errorText!,
