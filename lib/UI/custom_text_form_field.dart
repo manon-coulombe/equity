@@ -24,7 +24,6 @@ class CustomTextFormField extends FormField<String?> {
             if (controller.text.isEmpty) {
               return emptyErrorMessage;
             }
-
             if (customValidator != null) {
               final error = customValidator(controller.text);
               if (error != null) return error;
@@ -74,7 +73,7 @@ class CustomTextFormField extends FormField<String?> {
                     style: TextStyle(color: Color.fromRGBO(208, 1, 4, 1)),
                   )
                 else
-                  SizedBox(height: 20)
+                  SizedBox(height: 20),
               ],
             );
           },

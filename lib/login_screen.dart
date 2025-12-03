@@ -106,6 +106,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: emailController,
                       label: 'Adresse e-mail',
                       emptyErrorMessage: 'Saisir l\'adresse e-mail',
+                      customValidator: (value) {
+                        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+                          return "Format invalide";
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 16),
                     Column(
@@ -139,7 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: () => _logUserIn(),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _logUserIn();
+                        }
+                      },
                       style: OutlinedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 50),
                           backgroundColor: Color.fromRGBO(106, 208, 153, 1),
