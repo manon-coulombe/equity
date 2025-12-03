@@ -83,9 +83,7 @@ class PasswordFormField extends FormField<String?> {
                   Text(
                     state.errorText!,
                     style: TextStyle(color: Color.fromRGBO(208, 1, 4, 1)),
-                  )
-                else
-                  SizedBox(height: 20),
+                  ),
               ],
             );
           },

@@ -1,5 +1,6 @@
 import 'package:currency_picker/currency_picker.dart';
 import 'package:equity/UI/bouton_add.dart';
+import 'package:equity/UI/button_validate.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
@@ -96,7 +97,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                     label: 'Nom du compte',
                     emptyErrorMessage: 'Saisir le nom du compte',
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 4),
                   FormField(
                     validator: (_) {
                       if (participants.length < 2) {
@@ -131,6 +132,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                           ],
                         ),
                         SizedBox(height: 8),
+                        participants.isNotEmpty ?
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -156,9 +158,9 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                                 ],
                               ),
                             ),
-                            separatorBuilder: (context, i) => Divider(),
+                            separatorBuilder: (context, i) => i > 0 ? Divider() : SizedBox(),
                           ),
-                        ),
+                        ) : Container(),
                         SizedBox(height: 4),
                         if (state.hasError && state.errorText != null)
                           Text(
@@ -170,7 +172,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 40),
                   StoreConnector<AppState, CompteFormViewmodel>(
                     distinct: true,
                     converter: (store) => CompteFormViewmodel.from(store),
@@ -188,16 +190,9 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                     },
                     builder: (context, vm) {
                       final isLoading = vm.postCompteStatus == Status.LOADING;
-                      return OutlinedButton(
-                        onPressed: () => isLoading ? null : submit(vm),
-                        style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(16.0)),
-                        child: isLoading
-                            ? SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(),
-                              )
-                            : Text('Créer le compte'),
+                      return ButtonValidate(
+                        onValidate: () => isLoading ? null : submit(vm),
+                        isLoading: isLoading,
                       );
                     },
                   )

@@ -332,14 +332,18 @@ class _TransactionFormState extends State<TransactionForm> {
                     onDidChange: (oldVm, vm) {
                       if (oldVm?.postTransactionStatus != vm.postTransactionStatus) {
                         if (vm.postTransactionStatus == Status.SUCCESS) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text('Transaction ajoutée'),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Transaction ajoutée'),
+                            ),
+                          );
                           Navigator.pop(context);
                         } else if (vm.postTransactionStatus == Status.ERROR) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text('Une erreur est survenue'),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Une erreur est survenue'),
+                            ),
+                          );
                         }
                       }
                     },
@@ -360,6 +364,7 @@ class _TransactionFormState extends State<TransactionForm> {
                             );
                           }
                         },
+                        isLoading: vm.postTransactionStatus == Status.LOADING,
                       ),
                     ),
                   ),

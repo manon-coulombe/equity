@@ -2,6 +2,7 @@ import 'package:equity/UI/button_validate.dart';
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AjoutParticipantBottomsheet extends StatefulWidget {
   const AjoutParticipantBottomsheet({
@@ -42,20 +43,23 @@ class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomshee
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 28),
                 CustomTextFormField(
                   label: 'Nom',
                   controller: _nomController,
                   emptyErrorMessage: 'Saisir le nom',
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 4),
                 CustomTextFormField(
                   label: 'Revenus nets par mois',
                   controller: _revenusController,
                   emptyErrorMessage: 'Saisir les revenus',
                   keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                  ],
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 8),
                 ButtonValidate(
                   onValidate: () {
                     if (_formKey.currentState!.validate()) {
@@ -65,6 +69,7 @@ class _AjoutParticipantBottomsheetState extends State<AjoutParticipantBottomshee
                       );
                     }
                   },
+                  isLoading: false,
                 ),
               ],
             ),
