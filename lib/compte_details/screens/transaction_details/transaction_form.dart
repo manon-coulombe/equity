@@ -9,6 +9,7 @@ import 'package:equity/compte_details/screens/transaction_details/transaction_fo
 import 'package:equity/redux/app_state.dart';
 import 'package:equity/utils/status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -148,6 +149,9 @@ class _TransactionFormState extends State<TransactionForm> {
                             }
                             return null;
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                          ],
                         ),
                       ),
                       SizedBox(width: 16),

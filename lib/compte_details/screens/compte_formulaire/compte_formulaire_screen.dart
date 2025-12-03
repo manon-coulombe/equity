@@ -51,79 +51,126 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: TypeDeCompte.values
-                        .map(
-                          (type) => TypeDeCompteCard(
-                            label: type.label,
-                            isSelected: _selectedTypeDeCompte == type,
-                            select: () {
-                              setState(() {
-                                _selectedTypeDeCompte = type;
-                              });
-                            },
-                          ),
-                        )
-                        .toList(),
+                  FormField(
+                    validator: (_) {
+                      if (_selectedTypeDeCompte == null) {
+                        return 'Selectionner un type de compte';
+                      }
+                      return null;
+                    },
+                    builder: (FormFieldState<String?> state) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: TypeDeCompte.values
+                              .map(
+                                (type) => TypeDeCompteCard(
+                                  label: type.label,
+                                  isError: state.hasError,
+                                  isSelected: _selectedTypeDeCompte == type,
+                                  select: () {
+                                    setState(() {
+                                      _selectedTypeDeCompte = type;
+                                    });
+                                    state.validate();
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        SizedBox(height: 4),
+                        if (state.hasError && state.errorText != null)
+                          Text(
+                            state.errorText!,
+                            style: TextStyle(color: Color.fromRGBO(208, 1, 4, 1)),
+                          )
+                        else
+                          SizedBox(height: 20),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 4),
                   CustomTextFormField(
                     controller: _nomController,
                     label: 'Nom du compte',
                     emptyErrorMessage: 'Saisir le nom du compte',
                   ),
-                  SizedBox(height: 40),
-                  Row(
-                    children: [
-                      Text('Participant·e·s', style: TextStyle(fontSize: 18)),
-                      SizedBox(width: 8),
-                      BoutonAdd(
-                        size: 28,
-                        onTap: () async {
-                          final participant = await showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return AjoutParticipantBottomsheet();
-                            },
-                          );
-                          setState(() {
-                            participants.add(participant);
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                    ),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: participants.length,
-                      itemBuilder: (context, i) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  SizedBox(height: 24),
+                  FormField(
+                    validator: (_) {
+                      if (participants.length < 2) {
+                        return 'Ajouter au moins deux participants';
+                      }
+                      return null;
+                    },
+                    builder: (FormFieldState<String?> state) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              participants[i].nom,
-                              style: TextStyle(fontSize: 16),
+                            Text('Participant·e·s', style: TextStyle(fontSize: 18)),
+                            SizedBox(width: 8),
+                            BoutonAdd(
+                              size: 28,
+                              onTap: () async {
+                                final participant = await showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return AjoutParticipantBottomsheet();
+                                  },
+                                );
+                                setState(() {
+                                  if (participant != null) {
+                                    participants.add(participant);
+                                  }
+                                  state.validate();
+                                });
+                              },
                             ),
-                            Text(participants[i].revenus.toString()),
                           ],
                         ),
-                      ),
-                      separatorBuilder: (context, i) => Divider(),
+                        SizedBox(height: 8),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                          ),
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount: participants.length,
+                            itemBuilder: (context, i) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    participants[i].nom,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(participants[i].revenus.toString()),
+                                ],
+                              ),
+                            ),
+                            separatorBuilder: (context, i) => Divider(),
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        if (state.hasError && state.errorText != null)
+                          Text(
+                            state.errorText!,
+                            style: TextStyle(color: Color.fromRGBO(208, 1, 4, 1)),
+                          )
+                        else
+                          SizedBox(height: 20),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 32),
+                  SizedBox(height: 4),
                   StoreConnector<AppState, CompteFormViewmodel>(
                     distinct: true,
                     converter: (store) => CompteFormViewmodel.from(store),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends FormField<String?> {
   final String label;
@@ -7,6 +8,7 @@ class CustomTextFormField extends FormField<String?> {
   final TextInputType keyboardType;
   final Function? customValidator;
   final Function? onChange;
+  final List<TextInputFormatter>? inputFormatters;
 
   CustomTextFormField({
     super.key,
@@ -16,6 +18,7 @@ class CustomTextFormField extends FormField<String?> {
     this.keyboardType = TextInputType.text,
     this.customValidator,
     this.onChange,
+    this.inputFormatters,
   }) : super(
           validator: (_) {
             if (controller.text.isEmpty) {
@@ -63,6 +66,7 @@ class CustomTextFormField extends FormField<String?> {
                     fillColor: Colors.white,
                     filled: true,
                   ),
+                  inputFormatters: inputFormatters,
                 ),
                 if (state.hasError && state.errorText != null)
                   Text(
