@@ -4,6 +4,7 @@ import 'package:equity/home/redux/home_redux.dart';
 import 'package:equity/home/screen/compte_card.dart';
 import 'package:equity/home/screen/home_viewmodel.dart';
 import 'package:equity/redux/app_state.dart';
+import 'package:equity/utils/status.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -22,11 +23,11 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                signUserOut();
-              },
-              icon: Icon(Icons.logout),
-          )
+            onPressed: () {
+              signUserOut();
+            },
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
       body: StoreConnector<AppState, HomeViewmodel>(
@@ -57,13 +58,27 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 32),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: vm.comptes.isNotEmpty
-                      ? [
-                          ...vm.comptes.map(
-                            (compte) => CompteCard(compte),
-                          )
-                        ]
-                      : [Center(child: Text('Pas encore de comptes', style: TextStyle(fontSize: 20)))],
+                  children: [
+                    if (vm.status == Status.LOADING)
+                      Center(
+                        child: SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: CircularProgressIndicator(color: Color.fromRGBO(106, 208, 153, 1), strokeWidth: 6),
+                        ),
+                      )
+                    else if (vm.status == Status.SUCCESS)
+                      if (vm.comptes.isNotEmpty)
+                        ...vm.comptes.map(
+                          (compte) => CompteCard(compte),
+                        )
+                      else
+                        Center(child: Text('Pas encore de comptes', style: TextStyle(fontSize: 20)))
+                    else
+                      Center(
+                        child: Text('Une erreur est survenue', style: TextStyle(fontSize: 16)),
+                      ),
+                  ],
                 ),
                 SizedBox(height: 32),
               ],

@@ -125,42 +125,45 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                                   if (participant != null) {
                                     participants.add(participant);
                                   }
-                                  state.validate();
+                                  if (participants.length != 1) {
+                                    state.validate();
+                                  }
                                 });
                               },
                             ),
                           ],
                         ),
                         SizedBox(height: 8),
-                        participants.isNotEmpty ?
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            itemCount: participants.length,
-                            itemBuilder: (context, i) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    participants[i].nom,
-                                    style: TextStyle(fontSize: 16),
+                        participants.isNotEmpty
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: state.hasError ? Color.fromRGBO(208, 1, 4, 1) : Colors.black,
+                                    width: 1,
                                   ),
-                                  Text(participants[i].revenus.toString()),
-                                ],
-                              ),
-                            ),
-                            separatorBuilder: (context, i) => i > 0 ? Divider() : SizedBox(),
-                          ),
-                        ) : Container(),
+                                ),
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  itemCount: participants.length,
+                                  itemBuilder: (context, i) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          participants[i].nom,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        Text(participants[i].revenus.toString()),
+                                      ],
+                                    ),
+                                  ),
+                                  separatorBuilder: (context, i) =>  Divider(),
+                                ),
+                              )
+                            : Container(),
                         SizedBox(height: 4),
                         if (state.hasError && state.errorText != null)
                           Text(
@@ -172,7 +175,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 16),
                   StoreConnector<AppState, CompteFormViewmodel>(
                     distinct: true,
                     converter: (store) => CompteFormViewmodel.from(store),

@@ -224,7 +224,9 @@ class Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('error');
+    return Center(
+      child: Text('Une erreur est survenue', style: TextStyle(fontSize: 16)),
+    );
   }
 }
 
