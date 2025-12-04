@@ -41,6 +41,7 @@ class CompteDetailsMiddlewares {
       store.dispatch(ProcessPostCompteSuccessAction(compteId: result));
       store.dispatch(FetchComptesAction());
     }).onError((error) {
+      print(error);
       store.dispatch(ProcessPostCompteErrorAction());
     });
   }
@@ -57,6 +58,7 @@ class CompteDetailsMiddlewares {
       //TODO récupérer la transaction pour mettre à jour le state sans fetch
       store.dispatch(FetchCompteDetailsAction(action.compteId));
     }).onError((error) {
+      print(error);
       store.dispatch(ProcessPostTransactionErrorAction(compteId: action.compteId));
     });
   }

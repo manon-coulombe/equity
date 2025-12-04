@@ -5,9 +5,9 @@ import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/utils/repo_result.dart' show RepoError, RepoResult, RepoSuccess;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 abstract class ICompteDetailsRepository {
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId);
@@ -21,12 +21,19 @@ abstract class ICompteDetailsRepository {
 
 class CompteDetailsRepository extends ICompteDetailsRepository {
   final apiUrl = dotenv.env['API_URL'];
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
+    final idToken = await user.getIdToken();
     final url = Uri.parse('${apiUrl}compte/$compteId');
     final response = await http.get(
       url,
-      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer $idToken',
+      },
     );
 
     if (response.statusCode == 200 && response.body.isNotEmpty) {
@@ -40,10 +47,15 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<void>> postTransaction(Transaction transaction, int compteId) async {
     final url = Uri.parse('${apiUrl}transaction');
+    final idToken = await user.getIdToken();
 
     final response = await http.post(
       url,
-      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer $idToken',
+      },
       body: convert.jsonEncode(transaction.toTransactionJson(compteId)),
     );
 
@@ -57,10 +69,15 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<void>> postParticipant(Participant participant, int compteId) async {
     final url = Uri.parse('${apiUrl}participant');
+    final idToken = await user.getIdToken();
 
     final response = await http.post(
       url,
-      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer $idToken',
+      },
       body: convert.jsonEncode(participant.toParticipantJson(compteId)),
     );
 
@@ -74,10 +91,15 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<int>> postCompte(CompteDetails compte) async {
     final url = Uri.parse('${apiUrl}compte');
+    final idToken = await user.getIdToken();
 
     final response = await http.post(
       url,
-      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer $idToken',
+      },
       body: convert.jsonEncode(compte.toCompteJson()),
     );
 
@@ -85,7 +107,6 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
       final Map<String, dynamic> data = convert.json.decode(response.body);
       return RepoSuccess(data['id']);
     } else {
-
       return RepoError('Une erreur est survenue');
     }
   }

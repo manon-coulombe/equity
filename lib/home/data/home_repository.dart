@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:equity/home/domain/compte.dart';
 import 'package:equity/utils/repo_result.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -14,10 +15,17 @@ class HomeRepository extends IHomeRepository {
 
   @override
   Future<RepoResult<List<Compte>>> getComptes() async {
+    final user = FirebaseAuth.instance.currentUser!;
+    final idToken = await user.getIdToken();
     final url = Uri.parse('$apiUrl');
+
     final response = await http.get(
       url,
-      headers: {"Content-Type": "application/json", "Accept": "*/*"},
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        'Authorization': 'Bearer $idToken',
+      },
     );
 
     if (response.statusCode == 200 && response.body.isNotEmpty) {

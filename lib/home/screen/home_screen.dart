@@ -1,6 +1,5 @@
 import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/compte_details/screens/compte_formulaire/compte_formulaire_screen.dart';
-import 'package:equity/home/redux/home_redux.dart';
 import 'package:equity/home/screen/compte_card.dart';
 import 'package:equity/home/screen/home_viewmodel.dart';
 import 'package:equity/redux/app_state.dart';
@@ -32,8 +31,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: StoreConnector<AppState, HomeViewmodel>(
         converter: (store) => HomeViewmodel.from(store),
-        onInit: (store) {
-          store.dispatch(FetchComptesAction());
+        onInitialBuild: (vm) {
+          vm.fetchComptes();
         },
         builder: (context, vm) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -56,6 +55,8 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 32),
+                //TODO temp
+                InkWell(onTap: () => vm.fetchComptes(), child: Text('load')),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
