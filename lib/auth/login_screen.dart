@@ -1,5 +1,6 @@
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/UI/password_form_field.dart';
+import 'package:equity/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,16 +23,20 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
   late String errorMessage;
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   void _logUserIn() async {
     setState(() {
       isLoading = true;
       isError = false;
     });
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      await authService.value.logIn(email: emailController.text, password: passwordController.text);
     } on FirebaseAuthException catch (e) {
       setState(() {
         isError = true;
@@ -107,7 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: 'Adresse e-mail',
                       emptyErrorMessage: 'Saisir l\'adresse e-mail',
                       customValidator: (value) {
-                        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+                        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value)) {
                           return "Format invalide";
                         }
                         return null;

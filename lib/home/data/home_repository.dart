@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 
+import 'package:equity/auth/auth_service.dart';
 import 'package:equity/home/domain/compte.dart';
 import 'package:equity/utils/repo_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ class HomeRepository extends IHomeRepository {
 
   @override
   Future<RepoResult<List<Compte>>> getComptes() async {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = authService.value.currentUser!;
     final idToken = await user.getIdToken();
     final url = Uri.parse('$apiUrl');
 

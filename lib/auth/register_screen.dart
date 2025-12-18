@@ -1,18 +1,19 @@
 import 'package:equity/UI/custom_text_form_field.dart';
 import 'package:equity/UI/password_form_field.dart';
+import 'package:equity/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SignupScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   final Function() onTap;
 
-  const SignupScreen({super.key, required this.onTap});
+  const RegisterScreen({super.key, required this.onTap});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -25,6 +26,16 @@ class _SignupScreenState extends State<SignupScreen> {
   bool showConfirmPassword = false;
   late String errorMessage;
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    firstNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   void _registerUser() async {
     setState(() {
       isLoading = true;
@@ -32,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     try {
       if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await authService.value.register(
           email: emailController.text,
           password: passwordController.text,
         );

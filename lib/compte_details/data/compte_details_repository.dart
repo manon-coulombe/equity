@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 
+import 'package:equity/auth/auth_service.dart';
 import 'package:equity/compte_details/data/compte_details_repository_mapper.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
@@ -21,7 +22,7 @@ abstract class ICompteDetailsRepository {
 
 class CompteDetailsRepository extends ICompteDetailsRepository {
   final apiUrl = dotenv.env['API_URL'];
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = authService.value.currentUser!;
 
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {

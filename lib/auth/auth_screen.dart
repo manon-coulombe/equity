@@ -1,6 +1,7 @@
+import 'package:equity/auth/auth_service.dart';
 import 'package:equity/home/screen/home_screen.dart';
-import 'package:equity/login_screen.dart';
-import 'package:equity/signup_screen.dart';
+import 'package:equity/auth/login_screen.dart';
+import 'package:equity/auth/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool showLoginScreen = true;
+
   void togglePages() {
     setState(() {
       showLoginScreen = !showLoginScreen;
@@ -22,7 +24,8 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(),
+      body: StreamBuilder<User?>(
+        stream: authService.value.authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return HomeScreen();
@@ -30,11 +33,11 @@ class _AuthScreenState extends State<AuthScreen> {
             if (showLoginScreen) {
               return LoginScreen(onTap: togglePages);
             } else {
-              return SignupScreen(onTap: togglePages);
+              return RegisterScreen(onTap: togglePages);
             }
           }
         },
-      )
+      ),
     );
   }
 }

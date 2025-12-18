@@ -1,4 +1,4 @@
-import 'package:equity/auth_screen.dart';
+import 'package:equity/auth/auth_screen.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';

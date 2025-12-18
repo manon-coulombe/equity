@@ -1,4 +1,5 @@
 import 'package:equity/UI/bouton_add.dart';
+import 'package:equity/auth/auth_service.dart';
 import 'package:equity/compte_details/screens/compte_formulaire/compte_formulaire_screen.dart';
 import 'package:equity/home/screen/compte_card.dart';
 import 'package:equity/home/screen/home_viewmodel.dart';
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   void signUserOut() {
-    FirebaseAuth.instance.signOut();
+    authService.value.logOut();
   }
 
   @override
