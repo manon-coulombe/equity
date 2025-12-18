@@ -8,6 +8,8 @@ class AuthService {
 
   User? get currentUser => firebaseAuth.currentUser;
 
+  bool get isEmailVerified => currentUser?.emailVerified ?? false;
+
   Stream<User?> get authStateChanges => firebaseAuth.authStateChanges();
 
   Future<UserCredential> register({
@@ -25,6 +27,14 @@ class AuthService {
   }
 
   Future<void> logOut() async {
-    return await firebaseAuth.signOut();
+    await firebaseAuth.signOut();
+  }
+
+  Future<void> sendVerificationEmail() async {
+    try {
+      await currentUser?.sendEmailVerification();
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -5,7 +5,6 @@ import 'package:equity/home/screen/compte_card.dart';
 import 'package:equity/home/screen/home_viewmodel.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:equity/utils/status.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

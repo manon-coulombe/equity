@@ -6,7 +6,6 @@ import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
 import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/utils/repo_result.dart' show RepoError, RepoResult, RepoSuccess;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -22,11 +21,11 @@ abstract class ICompteDetailsRepository {
 
 class CompteDetailsRepository extends ICompteDetailsRepository {
   final apiUrl = dotenv.env['API_URL'];
-  final user = authService.value.currentUser!;
+  final user = authService.value.currentUser;
 
   @override
   Future<RepoResult<CompteDetails>> getCompteDetails(int compteId) async {
-    final idToken = await user.getIdToken();
+    final idToken = await user!.getIdToken();
     final url = Uri.parse('${apiUrl}compte/$compteId');
     final response = await http.get(
       url,
@@ -48,7 +47,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<void>> postTransaction(Transaction transaction, int compteId) async {
     final url = Uri.parse('${apiUrl}transaction');
-    final idToken = await user.getIdToken();
+    final idToken = await user!.getIdToken();
 
     final response = await http.post(
       url,
@@ -70,7 +69,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<void>> postParticipant(Participant participant, int compteId) async {
     final url = Uri.parse('${apiUrl}participant');
-    final idToken = await user.getIdToken();
+    final idToken = await user!.getIdToken();
 
     final response = await http.post(
       url,
@@ -92,7 +91,7 @@ class CompteDetailsRepository extends ICompteDetailsRepository {
   @override
   Future<RepoResult<int>> postCompte(CompteDetails compte) async {
     final url = Uri.parse('${apiUrl}compte');
-    final idToken = await user.getIdToken();
+    final idToken = await user!.getIdToken();
 
     final response = await http.post(
       url,

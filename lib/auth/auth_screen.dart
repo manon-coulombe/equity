@@ -1,5 +1,5 @@
 import 'package:equity/auth/auth_service.dart';
-import 'package:equity/home/screen/home_screen.dart';
+import 'package:equity/auth/verify_email_screen.dart';
 import 'package:equity/auth/login_screen.dart';
 import 'package:equity/auth/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +28,8 @@ class _AuthScreenState extends State<AuthScreen> {
         stream: authService.value.authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomeScreen();
+            // return HomeScreen();
+            return VerifyEmailScreen();
           } else {
             if (showLoginScreen) {
               return LoginScreen(onTap: togglePages);

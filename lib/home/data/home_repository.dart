@@ -3,7 +3,6 @@ import 'dart:convert' as convert;
 import 'package:equity/auth/auth_service.dart';
 import 'package:equity/home/domain/compte.dart';
 import 'package:equity/utils/repo_result.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

@@ -20,7 +20,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  bool isLoading = false;
   bool isError = false;
   bool showPassword = false;
   bool showConfirmPassword = false;
@@ -38,7 +37,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _registerUser() async {
     setState(() {
-      isLoading = true;
       isError = false;
     });
     try {
@@ -73,20 +71,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
         print(e);
       }
-      setState(() {
-        isLoading = false;
-      });
     } catch (e) {
       print(e);
       setState(() {
         isError = true;
         errorMessage = 'Une erreur est survenue';
-        isLoading = false;
       });
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -185,19 +176,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           side: BorderSide(width: 0)),
-                      child: isLoading
-                          ? SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(),
-                            )
-                          : Text(
-                              'S\'inscrire',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                      child:
+                          //TODO
+                          // isLoading
+                          //     ? SizedBox(
+                          //         height: 20,
+                          //         width: 20,
+                          //         child: CircularProgressIndicator(),
+                          //       )
+                          //     :
+                          Text(
+                        'S\'inscrire',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 24),
                     Row(
