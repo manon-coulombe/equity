@@ -36,53 +36,55 @@ class HomeScreen extends StatelessWidget {
         },
         builder: (context, vm) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            controller: controller,
-            child: Column(
-              children: [
-                SizedBox(height: 24),
-                Text(
-                  'equity',
-                  style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
-                ),
-                SizedBox(height: 40),
-                BoutonAdd(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CompteFormScreen()),
-                    );
-                  },
-                ),
-                SizedBox(height: 32),
-                //TODO temp
-                InkWell(onTap: () => vm.fetchComptes(), child: Text('load')),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (vm.status == Status.LOADING)
-                      Center(
-                        child: SizedBox(
-                          height: 60,
-                          width: 60,
-                          child: CircularProgressIndicator(color: Color.fromRGBO(106, 208, 153, 1), strokeWidth: 6),
-                        ),
-                      )
-                    else if (vm.status == Status.SUCCESS)
-                      if (vm.comptes.isNotEmpty)
-                        ...vm.comptes.map(
-                          (compte) => CompteCard(compte),
+          child: RefreshIndicator(
+            onRefresh: () => vm.fetchComptes(),
+            child: SingleChildScrollView(
+              controller: controller,
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: 24),
+                  Text(
+                    'equity',
+                    style: TextStyle(fontSize: 80, fontWeight: FontWeight.w900, fontFamily: 'Mplus'),
+                  ),
+                  SizedBox(height: 40),
+                  BoutonAdd(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CompteFormScreen()),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 32),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (vm.status == Status.LOADING)
+                        Center(
+                          child: SizedBox(
+                            height: 60,
+                            width: 60,
+                            child: CircularProgressIndicator(color: Color.fromRGBO(106, 208, 153, 1), strokeWidth: 6),
+                          ),
                         )
+                      else if (vm.status == Status.SUCCESS)
+                        if (vm.comptes.isNotEmpty)
+                          ...vm.comptes.map(
+                            (compte) => CompteCard(compte),
+                          )
+                        else
+                          Center(child: Text('Pas encore de comptes', style: TextStyle(fontSize: 20)))
                       else
-                        Center(child: Text('Pas encore de comptes', style: TextStyle(fontSize: 20)))
-                    else
-                      Center(
-                        child: Text('Une erreur est survenue', style: TextStyle(fontSize: 16)),
-                      ),
-                  ],
-                ),
-                SizedBox(height: 32),
-              ],
+                        Center(
+                          child: Text('Une erreur est survenue', style: TextStyle(fontSize: 16)),
+                        ),
+                    ],
+                  ),
+                  SizedBox(height: 32),
+                ],
+              ),
             ),
           ),
         ),

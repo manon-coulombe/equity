@@ -6,19 +6,19 @@ abstract class Transaction extends Equatable {
   final int? id;
   final String titre;
   final double montant;
-  final Currency devise;
+  final Currency currency;
   final DateTime date;
 
   const Transaction({
     this.id,
     required this.titre,
     required this.montant,
-    required this.devise,
+    required this.currency,
     required this.date,
   });
 
   @override
-  List<Object?> get props => [id, titre, montant, devise, date];
+  List<Object?> get props => [id, titre, montant, currency, date];
 }
 
 class Depense extends Transaction {
@@ -29,7 +29,7 @@ class Depense extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.devise,
+    required super.currency,
     required super.date,
     required this.payeur,
     required this.repartition,
@@ -44,7 +44,7 @@ class Revenu extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.devise,
+    required super.currency,
     required super.date,
     required this.receveur,
     required this.repartition,
@@ -59,7 +59,7 @@ class Transfert extends Transaction {
     super.id,
     required super.titre,
     required super.montant,
-    required super.devise,
+    required super.currency,
     required super.date,
     required this.payeur,
     required this.receveur,

@@ -355,7 +355,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               transaction: Depense(
                                 titre: titreController.text,
                                 montant: double.parse(montantController.text.replaceAll(',', '.')),
-                                devise: selectedCurrency,
+                                currency: selectedCurrency,
                                 date: selectedDate,
                                 payeur: selectedPayeur,
                                 repartition: repartitions,
