@@ -31,10 +31,6 @@ class AuthService {
   }
 
   Future<void> sendVerificationEmail() async {
-    try {
-      await currentUser?.sendEmailVerification();
-    } catch (e) {
-      print(e);
-    }
+    await currentUser?.sendEmailVerification();
   }
 }
