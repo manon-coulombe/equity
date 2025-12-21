@@ -52,7 +52,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   }
 
   Future _checkVerifiedEmail() async {
-    print('coucou');
     await authService.value.currentUser?.reload();
     setState(() {
       isEmailVerified = authService.value.isEmailVerified;

@@ -1,7 +1,7 @@
 import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
 import 'package:equity/compte_details/screens/compte_details_viewmodel.dart';
-import 'package:equity/compte_details/screens/transaction_details/transaction_form.dart';
+import 'package:equity/compte_details/screens/transaction_details/transaction_form_screen.dart';
 import 'package:equity/compte_details/screens/transaction_item.dart';
 import 'package:equity/redux/app_state.dart';
 import 'package:equity/utils/status.dart';
@@ -18,7 +18,7 @@ class CompteDetailsScreen extends StatefulWidget {
 }
 
 class _CompteDetailsScreenState extends State<CompteDetailsScreen> with TickerProviderStateMixin {
-  late final TabController _tabController;
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -64,8 +64,8 @@ class _CompteDetailsScreenState extends State<CompteDetailsScreen> with TickerPr
           body: TabBarView(
             controller: _tabController,
             children: [
-              Center(child: TransactionsTab(vm: vm)),
-              Center(child: RepartitionTab(vm: vm)),
+              TransactionsTab(vm: vm),
+              RepartitionTab(vm: vm),
             ],
           ),
         );
@@ -168,53 +168,58 @@ class TransactionsTabSuccess extends StatelessWidget {
     final compteDetails = vm.compteDetails!;
     final transactionsDisplaymodels = compteDetails.transactionsDisplaymodels;
 
-    return Column(
-      children: [
-        SizedBox(height: 40),
-        BoutonAdd(onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetails)),
-          );
-        }),
-        SizedBox(height: 32),
-        Expanded(
-          child: transactionsDisplaymodels.isNotEmpty
-              ? ListView.builder(
-                  controller: controller,
-                  shrinkWrap: true,
-                  itemCount: transactionsDisplaymodels.length,
-                  itemBuilder: (_, i) {
-                    return TransactionItem(transactionsDisplaymodels[i]);
-                  },
-                )
-              : Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
+    return RefreshIndicator(
+      onRefresh: () async => vm.fetchCompte(),
+      child: SingleChildScrollView(
+        controller: controller,
+        physics: AlwaysScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+            minWidth: MediaQuery.of(context).size.width,
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 40),
+              BoutonAdd(onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetails)),
+                );
+              }),
+              SizedBox(height: 32),
+              if (transactionsDisplaymodels.isNotEmpty)
+                ...transactionsDisplaymodels.map((t) => TransactionItem(t))
+              else
+                Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
+              // SizedBox(height: 16),
+              // Container(
+              //   color: Color.fromRGBO(106, 208, 153, 1),
+              //   padding: EdgeInsets.all(16),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              //           Text(vm.compteDetails!.formattedTotal),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.end,
+              //         children: [
+              //           Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              //           Text(vm.compteDetails!.formattedBalance),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
         ),
-        // SizedBox(height: 16),
-        // Container(
-        //   color: Color.fromRGBO(106, 208, 153, 1),
-        //   padding: EdgeInsets.all(16),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: [
-        //           Text('Total dépenses', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        //           Text(vm.compteDetails!.formattedTotal),
-        //         ],
-        //       ),
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.end,
-        //         children: [
-        //           Text('Ma balance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        //           Text(vm.compteDetails!.formattedBalance),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ],
+      ),
     );
   }
 }

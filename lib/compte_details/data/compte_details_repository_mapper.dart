@@ -5,7 +5,6 @@ import 'package:equity/compte_details/domain/transaction.dart';
 
 extension CompteJsonMapper on Map<String, dynamic> {
   CompteDetails toCompteDetails() {
-    print(this);
     final typeDeCompte = _getTypeDeCompte(this['type']?['nom']);
     final transactions = _getTransactions(this['transactions']);
     final participants = _getParticipants(this['participants']);

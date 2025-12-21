@@ -8,7 +8,7 @@ import 'package:redux/redux.dart';
 class CompteDetailsViewmodel extends Equatable {
   final Status status;
   final CompteDetailsDisplaymodel? compteDetails;
-  final void Function() fetchCompte;
+  final Function fetchCompte;
 
   const CompteDetailsViewmodel({
     required this.compteDetails,

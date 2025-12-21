@@ -7,7 +7,7 @@ class ComptesDetailsState extends Equatable {
 
   const ComptesDetailsState({
     this.postCompteStatus = Status.NOT_LOADED,
-    this.lastPostedCompteId = null,
+    this.lastPostedCompteId,
     this.mapComptesDetailsStates = const {},
   });
 

@@ -1,6 +1,6 @@
 import 'package:equity/UI/bouton_add.dart';
 import 'package:equity/auth/auth_service.dart';
-import 'package:equity/compte_details/screens/compte_formulaire/compte_formulaire_screen.dart';
+import 'package:equity/compte_details/screens/compte_formulaire/compte_form_screen.dart';
 import 'package:equity/home/screen/compte_card.dart';
 import 'package:equity/home/screen/home_viewmodel.dart';
 import 'package:equity/redux/app_state.dart';
@@ -11,10 +11,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void signUserOut() {
-    authService.value.logOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = ScrollController();
@@ -23,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              signUserOut();
+              authService.value.logOut();
             },
             icon: Icon(Icons.logout),
           ),
@@ -37,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         builder: (context, vm) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: RefreshIndicator(
-            onRefresh: () => vm.fetchComptes(),
+            onRefresh: () async => vm.fetchComptes(),
             child: SingleChildScrollView(
               controller: controller,
               physics: AlwaysScrollableScrollPhysics(),
