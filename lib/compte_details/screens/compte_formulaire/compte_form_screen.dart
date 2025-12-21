@@ -96,6 +96,12 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                     controller: _nomController,
                     label: 'Nom du compte',
                     emptyErrorMessage: 'Saisir le nom du compte',
+                    customValidator: (value) {
+                      if (!RegExp(r'^[\p{L}0-9\s]+$', unicode: true).hasMatch(value)) {
+                        return "Saisir uniquement des lettre et des chiffres";
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 4),
                   FormField(

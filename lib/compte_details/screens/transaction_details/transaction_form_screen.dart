@@ -126,8 +126,8 @@ class _TransactionFormState extends State<TransactionForm> {
                     label: 'Titre',
                     emptyErrorMessage: 'Saisir le titre',
                     customValidator: (value) {
-                      if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
-                        return "Saisir uniquement des chiffres";
+                      if (!RegExp(r'^[\p{L}0-9\s]+$', unicode: true).hasMatch(value)) {
+                        return "Saisir uniquement des lettre et des chiffres";
                       }
                       return null;
                     },
@@ -329,7 +329,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   StoreConnector<AppState, TransactionFormViewmodel>(
                     distinct: true,
                     converter: (store) => TransactionFormViewmodel.from(store, compteId: widget.compteDetails.id),
-                    onDidChange: (oldVm, vm) {
+                    onWillChange: (oldVm, vm) {
                       if (oldVm?.postTransactionStatus != vm.postTransactionStatus) {
                         if (vm.postTransactionStatus == Status.SUCCESS) {
                           ScaffoldMessenger.of(context).showSnackBar(
