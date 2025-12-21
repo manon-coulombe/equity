@@ -160,7 +160,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                                       ],
                                     ),
                                   ),
-                                  separatorBuilder: (context, i) =>  Divider(),
+                                  separatorBuilder: (context, i) => Divider(),
                                 ),
                               )
                             : Container(),
@@ -179,17 +179,26 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                   StoreConnector<AppState, CompteFormViewmodel>(
                     distinct: true,
                     converter: (store) => CompteFormViewmodel.from(store),
-                    onWillChange: (oldVm, vm) => {
-                      if (oldVm?.postCompteStatus == Status.LOADING)
-                        {
-                          if (vm.postCompteStatus == Status.SUCCESS && vm.postedCompteId != null)
-                            {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => CompteDetailsScreen(vm.postedCompteId!)),
-                              ),
-                            }
+                    onWillChange: (oldVm, vm) {
+                      if (oldVm?.postCompteStatus != vm.postCompteStatus) {
+                        if (vm.postCompteStatus == Status.SUCCESS && vm.postedCompteId != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Compte ajouté'),
+                            ),
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => CompteDetailsScreen(vm.postedCompteId!)),
+                          );
+                        } else if (vm.postCompteStatus == Status.ERROR) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Une erreur est survenue'),
+                            ),
+                          );
                         }
+                      }
                     },
                     builder: (context, vm) {
                       final isLoading = vm.postCompteStatus == Status.LOADING;
