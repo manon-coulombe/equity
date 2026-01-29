@@ -31,11 +31,14 @@ class HomeRepository extends IHomeRepository {
     if (response.statusCode == 200 && response.body.isNotEmpty) {
       final List<dynamic> data = convert.json.decode(response.body);
 
-      final comptes = data
-          .map(
-            (e) => Compte(nom: e['nom'], id: e['id']),
-          )
-          .toList();
+      data.sort((a, b) {
+        if (b['created_at'] != null && a['created_at'] != null) {
+          return b['created_at'].compareTo(a['created_at']);
+        }
+        return 1;
+      });
+
+      final comptes = data.map((e) => Compte(nom: e['nom'], id: e['id'])).toList();
       return RepoSuccess(comptes);
     } else {
       return RepoError('Une erreur est survenue');
