@@ -26,6 +26,7 @@ class CompteDetailsMiddlewares {
     result.onSuccess((result) {
       store.dispatch(ProcessFetchCompteDetailsSuccessAction(result));
     }).onError((error) {
+      print(error);
       store.dispatch(ProcessFetchCompteDetailsErrorAction(action.id));
     });
   }

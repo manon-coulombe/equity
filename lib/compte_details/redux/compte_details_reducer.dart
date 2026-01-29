@@ -63,7 +63,7 @@ class CompteDetailsReducers {
     if (map[action.id] == null) {
       map[action.id] = CompteDetailsState(status: Status.ERROR);
     } else {
-      map[action.id]!.clone(status: Status.ERROR);
+      map[action.id] = map[action.id]!.clone(status: Status.ERROR);
     }
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
