@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:989404866502:android:493bdb5a85a3717621b4c7",
+        "mobilesdk_app_id": "1:989404866502:android:06c90259c8a7486d21b4c7",
         "android_client_info": {
-          "package_name": "com.example.test_project"
+          "package_name": "com.manoncoulombe.equity"
         }
       },
       "oauth_client": [],
