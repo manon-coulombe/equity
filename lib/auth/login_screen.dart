@@ -137,19 +137,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          child: Text(
-                            'Mot de passe oublié',
-                            style: TextStyle(
-                              color: Color.fromRGBO(77, 129, 231, 1),
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ),
+                      //TODO
+                      // SizedBox(height: 8),
+                      // Align(
+                      //   alignment: Alignment.bottomRight,
+                      //   child: InkWell(
+                      //     child: Text(
+                      //       'Mot de passe oublié',
+                      //       style: TextStyle(
+                      //         color: Color.fromRGBO(77, 129, 231, 1),
+                      //         decoration: TextDecoration.underline,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 24),
                       OutlinedButton(
                         onPressed: () {

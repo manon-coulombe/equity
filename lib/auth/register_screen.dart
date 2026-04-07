@@ -3,6 +3,7 @@ import 'package:equity/UI/password_form_field.dart';
 import 'package:equity/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class RegisterScreen extends StatefulWidget {
   final Function() onTap;
@@ -85,132 +86,140 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         backgroundColor: Color.fromRGBO(254, 99, 101, 1),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(253, 221, 219, 1),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Inscription',
-                      style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
-                    if (isError)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(errorMessage, textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
-                      )
-                    else
-                      SizedBox(height: 32),
-                    CustomTextFormField(
-                      controller: emailController,
-                      label: 'Adresse e-mail',
-                      emptyErrorMessage: 'Saisir l\'adresse e-mail',
-                      customValidator: (value) {
-                        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                            .hasMatch(value)) {
-                          return "Format invalide";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 4),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Mot de passe', style: TextStyle(fontSize: 18)),
-                        SizedBox(height: 4),
-                        PasswordFormField(
-                          passwordController: passwordController,
-                          showPassword: showPassword,
-                          setShowPassword: () {
-                            setState(() {
-                              showPassword = !showPassword;
-                            });
-                          },
-                          validatePasswordInit: true,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 24),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Confirmation du mot de passe', style: TextStyle(fontSize: 18)),
-                        SizedBox(height: 4),
-                        PasswordFormField(
-                          passwordController: confirmPasswordController,
-                          showPassword: showConfirmPassword,
-                          setShowPassword: () {
-                            setState(() {
-                              showConfirmPassword = !showConfirmPassword;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 24),
-                    OutlinedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _registerUser();
-                        }
-                      },
-                      style: OutlinedButton.styleFrom(
-                          minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                          backgroundColor: Color.fromRGBO(106, 208, 153, 1),
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(253, 221, 219, 1),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/equity.svg',
+                        width: 40,
+                        height: 40,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Inscription',
+                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
+                      ),
+                      if (isError)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(errorMessage, textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
+                        )
+                      else
+                        SizedBox(height: 32),
+                      CustomTextFormField(
+                        controller: emailController,
+                        label: 'Adresse e-mail',
+                        emptyErrorMessage: 'Saisir l\'adresse e-mail',
+                        customValidator: (value) {
+                          if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value)) {
+                            return "Format invalide";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 4),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Mot de passe', style: TextStyle(fontSize: 18)),
+                          SizedBox(height: 4),
+                          PasswordFormField(
+                            passwordController: passwordController,
+                            showPassword: showPassword,
+                            setShowPassword: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                            validatePasswordInit: true,
                           ),
-                          side: BorderSide(width: 0)),
-                      child:
-                          //TODO
-                          // isLoading
-                          //     ? SizedBox(
-                          //         height: 20,
-                          //         width: 20,
-                          //         child: CircularProgressIndicator(),
-                          //       )
-                          //     :
-                          Text(
-                        'S\'inscrire',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                        ],
+                      ),
+                      SizedBox(height: 24),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Confirmation du mot de passe', style: TextStyle(fontSize: 18)),
+                          SizedBox(height: 4),
+                          PasswordFormField(
+                            passwordController: confirmPasswordController,
+                            showPassword: showConfirmPassword,
+                            setShowPassword: () {
+                              setState(() {
+                                showConfirmPassword = !showConfirmPassword;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 24),
+                      OutlinedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _registerUser();
+                          }
+                        },
+                        style: OutlinedButton.styleFrom(
+                            minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                            backgroundColor: Color.fromRGBO(106, 208, 153, 1),
+                            foregroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            side: BorderSide(width: 0)),
+                        child:
+                            //TODO
+                            // isLoading
+                            //     ? SizedBox(
+                            //         height: 20,
+                            //         width: 20,
+                            //         child: CircularProgressIndicator(),
+                            //       )
+                            //     :
+                            Text(
+                          'S\'inscrire',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Vous avez déjà un compte ? '),
-                        InkWell(
-                          onTap: widget.onTap,
-                          child: Text(
-                            'Se connecter',
-                            style: TextStyle(
-                              color: Color.fromRGBO(77, 129, 231, 1),
-                              decoration: TextDecoration.underline,
+                      SizedBox(height: 24),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Vous avez déjà un compte ? '),
+                          InkWell(
+                            onTap: widget.onTap,
+                            child: Text(
+                              'Se connecter',
+                              style: TextStyle(
+                                color: Color.fromRGBO(77, 129, 231, 1),
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

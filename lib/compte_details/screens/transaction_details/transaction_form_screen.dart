@@ -265,6 +265,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       SizedBox(
                         width: 160,
                         child: DropdownButtonFormField(
+                          isExpanded: true,
                           value: selectedRepartition,
                           items: Repartition.values.map<DropdownMenuItem<Repartition>>((value) {
                             return DropdownMenuItem(
