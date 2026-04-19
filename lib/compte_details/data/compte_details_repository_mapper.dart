@@ -120,14 +120,14 @@ extension CompteJsonMapper on Map<String, dynamic> {
             ))
         .toList();
   }
-
-  Repartition _getRepartitionParDefaut(String? repartition) {
-    return switch (repartition) {
-      'EQUITABLE' => Repartition.EQUITABLE,
-      'EGALE' => Repartition.EGALE,
-      _ => Repartition.AUTRE,
-    };
-  }
+  //
+  // Repartition _getRepartitionParDefaut(String? repartition) {
+  //   return switch (repartition) {
+  //     'EQUITABLE' => Repartition.EQUITABLE,
+  //     'EGALE' => Repartition.EGALE,
+  //     _ => Repartition.AUTRE,
+  //   };
+  // }
 }
 
 extension CompteDetailsMapper on CompteDetails {
