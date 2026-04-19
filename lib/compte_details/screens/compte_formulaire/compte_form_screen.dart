@@ -38,7 +38,7 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(253, 221, 219, 1),
         title: Text(
-          'Nouveau compte Equity',
+          'Nouveau compte equity',
           style: TextStyle(color: Color.fromRGBO(254, 99, 101, 1), fontWeight: FontWeight.w700),
         ),
         centerTitle: true,

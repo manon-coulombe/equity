@@ -24,7 +24,7 @@ class App extends StatelessWidget {
           fontFamily: 'Raleway',
           useMaterial3: true,
         ),
-        title: 'Equity',
+        title: 'equity',
         home: AuthScreen(),
       ),
     );
