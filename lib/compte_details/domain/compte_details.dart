@@ -54,8 +54,8 @@ enum TypeDeCompte {
 
 enum Repartition {
   EQUITABLE('Équitable', 1),
-  EGALE('Égale', 2),
-  AUTRE('Personnalisée', 0);
+  EGALE('Égale', 2);
+  // AUTRE('Personnalisée', 0);
 
   final String label;
   final int id;

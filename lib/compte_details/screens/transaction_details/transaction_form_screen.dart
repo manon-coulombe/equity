@@ -38,7 +38,7 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   void initState() {
     super.initState();
-    currencies = CurrencyService().getAll();
+    currencies = CurrencyService().getAll()..sort((a, b) => a.name.compareTo(b.name));
     selectedPayeur = widget.compteDetails.participants.first;
     selectedCurrency = currencies.firstWhere((c) => c.code == widget.compteDetails.currencyCode);
     selectedRepartition = widget.compteDetails.repartitionParDefaut;
@@ -83,8 +83,8 @@ class _TransactionFormState extends State<TransactionForm> {
             };
           });
           break;
-        case Repartition.AUTRE:
-          return;
+        // case Repartition.AUTRE:
+        //   return;
       }
     } else {
       setState(() {
@@ -178,7 +178,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                   value: currency,
                                   child: Text(
                                     "${currency.name} (${currency.symbol})",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
                                   ),
                                 );
                               }).toList(),
