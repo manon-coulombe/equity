@@ -123,8 +123,14 @@ class _CompteFormScreenState extends State<CompteFormScreen> {
                               onTap: () async {
                                 final participant = await showModalBottomSheet(
                                   context: context,
+                                  isScrollControlled: true,
                                   builder: (context) {
-                                    return AjoutParticipantBottomsheet();
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context).viewInsets.bottom, // 👈 hauteur du clavier
+                                      ),
+                                      child: AjoutParticipantBottomsheet(),
+                                    );
                                   },
                                 );
                                 setState(() {
