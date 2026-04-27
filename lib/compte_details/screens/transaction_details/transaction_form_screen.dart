@@ -61,9 +61,8 @@ class _TransactionFormState extends State<TransactionForm> {
     });
   }
 
-  _setRepartion() {
-    if (montantController.text.isNotEmpty && montantController.text != '0') {
-      final montantTransaction = double.parse(montantController.text.replaceAll(',', '.'));
+  _setRepartion(double? montantTransaction) {
+    if (montantTransaction != null && montantTransaction != 0) {
       switch (selectedRepartition) {
         case Repartition.EGALE:
           final montant = _arrondir(montantTransaction / partitcipants.length);
@@ -142,15 +141,20 @@ class _TransactionFormState extends State<TransactionForm> {
                           controller: montantController,
                           emptyErrorMessage: 'Saisir le montant',
                           keyboardType: TextInputType.number,
-                          onChange: _setRepartion,
+                          onChange: () {
+                            final montant = double.tryParse(montantController.text.replaceAll(',', '.'));
+                            _setRepartion(montant);
+                          },
                           customValidator: (value) {
-                            if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                            if (!RegExp(r'^[0-9.,]+$').hasMatch(value)) {
                               return "Saisir uniquement des chiffres";
+                            } else if (double.tryParse(value) == null) {
+                              return "Le format est invalide";
                             }
                             return null;
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                           ],
                         ),
                       ),
@@ -281,7 +285,8 @@ class _TransactionFormState extends State<TransactionForm> {
                               setState(() {
                                 selectedRepartition = repartition;
                               });
-                              _setRepartion();
+                              final montant = double.tryParse(montantController.text.replaceAll(',', '.'));
+                              _setRepartion(montant);
                             }
                           },
                           decoration: InputDecoration(
