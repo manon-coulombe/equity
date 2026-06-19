@@ -137,7 +137,10 @@ class TransactionDetailsScreen extends StatelessWidget {
                   ),
                   backgroundColor: Color.fromRGBO(252, 99, 97, 1),
                 ),
-                onPressed: () => DeleteTransactionAction(transactionDisplayModel.id),
+                onPressed: () => DeleteTransactionAction(
+                  transactionId: transactionDisplayModel.id,
+                  compteId: compteDetailsDisplayModel.id,
+                ),
                 child: const Text('Supprimer', style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
             ],

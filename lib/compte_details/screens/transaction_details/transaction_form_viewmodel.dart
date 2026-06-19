@@ -14,7 +14,7 @@ class TransactionFormViewmodel extends Equatable {
   factory TransactionFormViewmodel.from(Store<AppState> store, {required int compteId}) {
     return TransactionFormViewmodel(
       postTransactionStatus:
-          store.state.comptesDetailsState.mapComptesDetailsStates[compteId]?.postTransactionStatus ?? Status.NOT_LOADED,
+          store.state.comptesDetailsState.mapComptesDetailsStates[compteId]?.postOrDeleteTransactionStatus ?? Status.NOT_LOADED,
       postTransaction: ({required Transaction transaction, required int compteId}) {
         store.dispatch(PostTransactionAction(transaction: transaction, compteId: compteId));
       },

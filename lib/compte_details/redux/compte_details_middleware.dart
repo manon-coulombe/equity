@@ -13,6 +13,7 @@ class CompteDetailsMiddlewares {
       TypedMiddleware<AppState, FetchCompteDetailsAction>(middlewares._onFetchCompteDetailsAction).call,
       TypedMiddleware<AppState, PostCompteAction>(middlewares._onPostCompteAction).call,
       TypedMiddleware<AppState, PostTransactionAction>(middlewares._onPostTransactionAction).call,
+      TypedMiddleware<AppState, DeleteTransactionAction>(middlewares._onDeleteTransactionAction).call,
     ];
   }
 
@@ -32,10 +33,10 @@ class CompteDetailsMiddlewares {
   }
 
   Future<void> _onPostCompteAction(
-      Store<AppState> store,
-      PostCompteAction action,
-      NextDispatcher next,
-      ) async {
+    Store<AppState> store,
+    PostCompteAction action,
+    NextDispatcher next,
+  ) async {
     next(action);
     final result = await compteDetailsRepository.postCompte(action.compte);
     result.onSuccess((result) {
@@ -61,6 +62,21 @@ class CompteDetailsMiddlewares {
     }).onError((error) {
       print(error);
       store.dispatch(ProcessPostTransactionErrorAction(compteId: action.compteId));
+    });
+  }
+
+  Future<void> _onDeleteTransactionAction(
+    Store<AppState> store,
+    DeleteTransactionAction action,
+    NextDispatcher next,
+  ) async {
+    next(action);
+    final result = await compteDetailsRepository.deleteTransaction(action.transactionId);
+    result.onSuccess((_) {
+      store.dispatch(ProcessDeleteTransactionSuccessAction(compteId: action.compteId));
+    }).onError((error) {
+      print(error);
+      store.dispatch(ProcessDeleteTransactionErrorAction(compteId: action.compteId));
     });
   }
 }

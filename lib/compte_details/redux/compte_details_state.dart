@@ -29,26 +29,26 @@ class ComptesDetailsState extends Equatable {
 class CompteDetailsState extends Equatable {
   final Status status;
   final CompteDetails? compteDetails;
-  final Status postTransactionStatus;
+  final Status postOrDeleteTransactionStatus;
 
   const CompteDetailsState({
     this.status = Status.NOT_LOADED,
     this.compteDetails,
-    this.postTransactionStatus = Status.NOT_LOADED,
+    this.postOrDeleteTransactionStatus = Status.NOT_LOADED,
   });
 
   CompteDetailsState clone({
     Status? status,
-    Status? postTransactionStatus,
+    Status? postOrDeleteTransactionStatus,
     CompteDetails? compteDetails,
   }) {
     return CompteDetailsState(
       status: status ?? this.status,
-      postTransactionStatus: postTransactionStatus ?? this.postTransactionStatus,
+      postOrDeleteTransactionStatus: postOrDeleteTransactionStatus ?? this.postOrDeleteTransactionStatus,
       compteDetails: compteDetails ?? this.compteDetails,
     );
   }
 
   @override
-  List<Object?> get props => [status, compteDetails, postTransactionStatus];
+  List<Object?> get props => [status, compteDetails, postOrDeleteTransactionStatus];
 }

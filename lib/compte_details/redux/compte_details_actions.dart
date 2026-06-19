@@ -50,3 +50,22 @@ class ProcessPostTransactionErrorAction {
 
   ProcessPostTransactionErrorAction({required this.compteId});
 }
+
+class DeleteTransactionAction {
+  final int transactionId;
+  final int compteId;
+
+  DeleteTransactionAction({required this.transactionId, required this.compteId});
+}
+
+class ProcessDeleteTransactionSuccessAction {
+  final int compteId;
+
+  ProcessDeleteTransactionSuccessAction({required this.compteId});
+}
+
+class ProcessDeleteTransactionErrorAction {
+  final int compteId;
+
+  ProcessDeleteTransactionErrorAction({required this.compteId});
+}

@@ -30,6 +30,15 @@ class CompteDetailsReducers {
       TypedReducer<AppState, ProcessPostTransactionErrorAction>(
         CompteDetailsReducers._onProcessPostTransactionErrorAction,
       ).call,
+      TypedReducer<AppState, DeleteTransactionAction>(
+        CompteDetailsReducers._onDeleteTransactionAction,
+      ).call,
+      TypedReducer<AppState, ProcessDeleteTransactionSuccessAction>(
+        CompteDetailsReducers._onProcessDeleteTransactionSuccessAction,
+      ).call,
+      TypedReducer<AppState, ProcessDeleteTransactionErrorAction>(
+        CompteDetailsReducers._onProcessDeleteTransactionErrorAction,
+      ).call,
     ];
   }
 
@@ -104,7 +113,7 @@ class CompteDetailsReducers {
     if (compte == null) {
       return state;
     } else {
-      compte.clone(postTransactionStatus: Status.LOADING);
+      compte.clone(postOrDeleteTransactionStatus: Status.LOADING);
     }
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
@@ -118,7 +127,7 @@ class CompteDetailsReducers {
     if (map[action.compteId] == null) {
       return state;
     } else {
-      map[action.compteId] = map[action.compteId]!.clone(postTransactionStatus: Status.SUCCESS);
+      map[action.compteId] = map[action.compteId]!.clone(postOrDeleteTransactionStatus: Status.SUCCESS);
     }
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
@@ -133,7 +142,49 @@ class CompteDetailsReducers {
     if (compte == null) {
       return state;
     } else {
-      compte.clone(postTransactionStatus: Status.ERROR);
+      compte.clone(postOrDeleteTransactionStatus: Status.ERROR);
+    }
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
+  }
+
+  static AppState _onDeleteTransactionAction(
+      AppState state,
+      DeleteTransactionAction action,
+      ) {
+    final Map<int, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+
+    if (map[action.compteId] == null) {
+      return state;
+    } else {
+      map[action.compteId] = map[action.compteId]!.clone(postOrDeleteTransactionStatus: Status.SUCCESS);
+    }
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
+  }
+
+  static AppState _onProcessDeleteTransactionSuccessAction(
+      AppState state,
+      ProcessDeleteTransactionSuccessAction action,
+      ) {
+    final Map<int, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+
+    if (map[action.compteId] == null) {
+      return state;
+    } else {
+      map[action.compteId] = map[action.compteId]!.clone(postOrDeleteTransactionStatus: Status.SUCCESS);
+    }
+    return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
+  }
+
+  static AppState _onProcessDeleteTransactionErrorAction(
+      AppState state,
+      ProcessDeleteTransactionErrorAction action,
+      ) {
+    final Map<int, CompteDetailsState> map = Map.from(state.comptesDetailsState.mapComptesDetailsStates);
+
+    if (map[action.compteId] == null) {
+      return state;
+    } else {
+      map[action.compteId] = map[action.compteId]!.clone(postOrDeleteTransactionStatus: Status.ERROR);
     }
     return state.clone(comptesDetailsState: ComptesDetailsState(mapComptesDetailsStates: map));
   }
