@@ -189,7 +189,7 @@ class TransactionsTabSuccess extends StatelessWidget {
               }),
               SizedBox(height: 32),
               if (transactionsDisplaymodels.isNotEmpty)
-                ...transactionsDisplaymodels.map((t) => TransactionItem(t))
+                ...transactionsDisplaymodels.map((t) => TransactionItem(transactionDisplayModel: t, compteDetailsDisplayModel: compteDetails))
               else
                 Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
               // SizedBox(height: 16),

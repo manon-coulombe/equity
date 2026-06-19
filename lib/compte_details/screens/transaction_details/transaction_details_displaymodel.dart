@@ -3,7 +3,7 @@ import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionDisplaymodel extends Equatable {
-  final int? id;
+  final int id;
   final String titre;
   final String formattedDate;
   final String formattedMontant;
@@ -11,7 +11,7 @@ class TransactionDisplaymodel extends Equatable {
   final Map<String, String>? repartition;
 
   const TransactionDisplaymodel({
-    this.id,
+    required this.id,
     required this.titre,
     required this.formattedDate,
     required this.formattedMontant,
@@ -24,14 +24,18 @@ class TransactionDisplaymodel extends Equatable {
 }
 
 TransactionDisplaymodel toTransactionDisplaymodel(Transaction transaction) {
-  return TransactionDisplaymodel(
-    id: transaction.id,
-    titre: transaction.titre,
-    formattedDate: DateFormat('dd MMM yyyy').format(transaction.date),
-    formattedMontant: '${transaction.montant.toStringAsFixed(2)} ${transaction.currency.symbol}'.replaceAll('.', ','),
-    payeur: transaction is Depense ? transaction.payeur.nom : 'todo',
-    repartition: transaction is Depense
-        ? transaction.repartition.map((p, m) => MapEntry(p.nom, '${m.toString()} ${transaction.currency.symbol}'.replaceAll('.', ',')))
-        : null,
-  );
+  return transaction.id == null
+      ? throw Error()
+      : TransactionDisplaymodel(
+          id: transaction.id!,
+          titre: transaction.titre,
+          formattedDate: DateFormat('dd MMM yyyy').format(transaction.date),
+          formattedMontant:
+              '${transaction.montant.toStringAsFixed(2)} ${transaction.currency.symbol}'.replaceAll('.', ','),
+          payeur: transaction is Depense ? transaction.payeur.nom : 'todo',
+          repartition: transaction is Depense
+              ? transaction.repartition
+                  .map((p, m) => MapEntry(p.nom, '${m.toString()} ${transaction.currency.symbol}'.replaceAll('.', ',')))
+              : null,
+        );
 }
