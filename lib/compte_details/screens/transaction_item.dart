@@ -38,10 +38,11 @@ class TransactionItem extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => TransactionDetailsScreen(
-                        transactionDisplayModel: transactionDisplayModel,
-                        compteDetailsDisplayModel: compteDetailsDisplayModel,
-                      )),
+                builder: (context) => TransactionDetailsScreen(
+                  transactionDisplayModel: transactionDisplayModel,
+                  compteDetailsDisplayModel: compteDetailsDisplayModel,
+                ),
+              ),
             );
           },
           child: Padding(

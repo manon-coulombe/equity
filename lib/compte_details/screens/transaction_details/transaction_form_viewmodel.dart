@@ -7,16 +7,21 @@ import 'package:redux/redux.dart';
 
 class TransactionFormViewmodel extends Equatable {
   final Status postTransactionStatus;
-  final void Function({required Transaction transaction, required int compteId}) postTransaction;
+  final void Function({required Transaction transaction, required int compteId}) validate;
 
-  const TransactionFormViewmodel({required this.postTransaction, required this.postTransactionStatus});
+  const TransactionFormViewmodel({required this.validate, required this.postTransactionStatus});
 
   factory TransactionFormViewmodel.from(Store<AppState> store, {required int compteId}) {
     return TransactionFormViewmodel(
       postTransactionStatus:
           store.state.comptesDetailsState.mapComptesDetailsStates[compteId]?.postOrDeleteTransactionStatus ?? Status.NOT_LOADED,
-      postTransaction: ({required Transaction transaction, required int compteId}) {
+      validate: ({required Transaction transaction, required int compteId}) {
+        if (transaction.id == null) {
         store.dispatch(PostTransactionAction(transaction: transaction, compteId: compteId));
+          
+        } else {
+          //TODO
+        }
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:equity/compte_details/domain/compte_details.dart';
 import 'package:equity/compte_details/domain/participant.dart';
+import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/compte_details/screens/transaction_details/transaction_details_displaymodel.dart';
 
 class CompteDetailsDisplaymodel extends Equatable {
@@ -9,6 +10,7 @@ class CompteDetailsDisplaymodel extends Equatable {
   final String formattedTotal;
   final String formattedBalance;
   final List<TransactionDisplaymodel> transactionsDisplaymodels;
+  final List<Transaction> transactions;
   final List<Participant> participants;
   final String currencyCode;
   final Repartition repartitionParDefaut;
@@ -20,6 +22,7 @@ class CompteDetailsDisplaymodel extends Equatable {
     required this.formattedTotal,
     required this.formattedBalance,
     required this.transactionsDisplaymodels,
+    required this.transactions,
     required this.participants,
     required this.currencyCode,
     required this.repartitionParDefaut,
@@ -33,6 +36,7 @@ class CompteDetailsDisplaymodel extends Equatable {
         formattedTotal,
         formattedBalance,
         transactionsDisplaymodels,
+        transactions,
         participants,
         balance,
       ];
@@ -47,15 +51,18 @@ CompteDetailsDisplaymodel? toCompteDetailsDisplaymodel(CompteDetails? compte) {
           formattedTotal: '${compte.totalDepenses} ${compte.currency.symbol}'.replaceAll('.', ','),
           formattedBalance: 'formattedBalance',
           transactionsDisplaymodels: compte.transactions.map((trs) => toTransactionDisplaymodel(trs)).toList(),
+          transactions: compte.transactions,
           participants: compte.participants,
           currencyCode: compte.currency.code,
           repartitionParDefaut: compte.repartitionParDefaut,
-          balance: compte.balance.map(
+          balance: compte.balance
+              .map(
                 (b) => BalanceDisplayModel(
                   participant: b.participant,
                   formattedSolde: '${b.solde.toStringAsFixed(2)} ${compte.currency.symbol}'.replaceAll('.', ','),
                 ),
-              ).toList(),
+              )
+              .toList(),
         );
 }
 

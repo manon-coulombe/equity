@@ -1,3 +1,4 @@
+import 'package:equity/compte_details/domain/transaction.dart';
 import 'package:equity/compte_details/redux/compte_details_redux.dart';
 import 'package:equity/compte_details/screens/compte_details_displaymodel.dart';
 import 'package:equity/compte_details/screens/transaction_details/transaction_details_displaymodel.dart';
@@ -16,11 +17,12 @@ class TransactionDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transaction = compteDetailsDisplayModel.transactions.firstWhere((t) => t.id == transactionDisplayModel.id);
     return Scaffold(
       appBar: AppBar(
         actions: [
           PopupMenuButton<int>(
-            onSelected: (item) => onSelected(context, item),
+            onSelected: (item) => onSelected(context, item, transaction),
             itemBuilder: (context) => [
               PopupMenuItem(value: 0, child: Text('Modifier')),
               PopupMenuItem(value: 1, child: Text('Supprimer')),
@@ -103,12 +105,17 @@ class TransactionDetailsScreen extends StatelessWidget {
     );
   }
 
-  void onSelected(BuildContext context, int item) {
+  void onSelected(BuildContext context, int item, Transaction transaction) {
     switch (item) {
       case 0:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetailsDisplayModel)),
+          MaterialPageRoute(
+            builder: (context) => TransactionForm(
+              compteDisplayModel: compteDetailsDisplayModel,
+              transaction: transaction,
+            ),
+          ),
         );
       case 1:
         showDialog(

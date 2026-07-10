@@ -15,9 +15,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final CompteDetailsDisplaymodel compteDetails;
+  final CompteDetailsDisplaymodel compteDisplayModel;
+  final Transaction? transaction;
 
-  const TransactionForm({super.key, required this.compteDetails});
+  const TransactionForm({super.key, required this.compteDisplayModel, this.transaction});
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -34,16 +35,28 @@ class _TransactionFormState extends State<TransactionForm> {
   late Repartition selectedRepartition;
   late Map<Participant, double> repartitions;
   late List<Participant> partitcipants;
+  late int? id;
 
   @override
   void initState() {
     super.initState();
     currencies = CurrencyService().getAll()..sort((a, b) => a.name.compareTo(b.name));
-    selectedPayeur = widget.compteDetails.participants.first;
-    selectedCurrency = currencies.firstWhere((c) => c.code == widget.compteDetails.currencyCode);
-    selectedRepartition = widget.compteDetails.repartitionParDefaut;
-    partitcipants = widget.compteDetails.participants;
-    repartitions = {for (var participant in partitcipants) participant: 0};
+    final transaction = widget.transaction;
+    print(transaction?.currency.code);
+    if (transaction != null && transaction is Depense) {
+      titreController.text = transaction.titre;
+      montantController.text = transaction.montant.toString();
+      selectedPayeur = transaction.payeur;
+      selectedCurrency = currencies.firstWhere((c) => c.code == transaction.currency.code);
+      selectedDate = transaction.date;
+      repartitions = transaction.repartition;
+      id = transaction.id;
+    } else {
+      selectedPayeur = widget.compteDisplayModel.participants.first;
+      repartitions = {for (var participant in partitcipants) participant: 0};
+    }
+    partitcipants = widget.compteDisplayModel.participants;
+    selectedRepartition = widget.compteDisplayModel.repartitionParDefaut;
   }
 
   Future<void> _selectDate() async {
@@ -105,7 +118,7 @@ class _TransactionFormState extends State<TransactionForm> {
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(253, 221, 219, 1),
           title: Text(
-            'Nouvelle transaction',
+            'Transaction',
             style: TextStyle(color: Color.fromRGBO(254, 99, 101, 1), fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
@@ -239,7 +252,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   SizedBox(height: 8),
                   DropdownButtonFormField(
                     value: selectedPayeur,
-                    items: widget.compteDetails.participants.map<DropdownMenuItem<Participant>>((participant) {
+                    items: widget.compteDisplayModel.participants.map<DropdownMenuItem<Participant>>((participant) {
                       return DropdownMenuItem(
                         value: participant,
                         child: Text(
@@ -299,7 +312,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     ],
                   ),
                   SizedBox(height: 16),
-                  ...widget.compteDetails.participants.map(
+                  ...widget.compteDisplayModel.participants.map(
                     (participant) {
                       return Column(
                         children: [
@@ -334,7 +347,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   SizedBox(height: 40),
                   StoreConnector<AppState, TransactionFormViewmodel>(
                     distinct: true,
-                    converter: (store) => TransactionFormViewmodel.from(store, compteId: widget.compteDetails.id),
+                    converter: (store) => TransactionFormViewmodel.from(store, compteId: widget.compteDisplayModel.id),
                     onWillChange: (oldVm, vm) {
                       if (oldVm?.postTransactionStatus != vm.postTransactionStatus) {
                         if (vm.postTransactionStatus == Status.SUCCESS) {
@@ -357,17 +370,21 @@ class _TransactionFormState extends State<TransactionForm> {
                       child: ButtonValidate(
                         onValidate: () {
                           if (_formKey.currentState!.validate()) {
-                            vm.postTransaction(
-                              transaction: Depense(
-                                titre: titreController.text,
-                                montant: double.parse(montantController.text.replaceAll(',', '.')),
-                                currency: selectedCurrency,
-                                date: selectedDate,
-                                payeur: selectedPayeur,
-                                repartition: repartitions,
-                              ),
-                              compteId: widget.compteDetails.id,
-                            );
+                            if (id == null) {
+                              vm.validate(
+                                transaction: Depense(
+                                  titre: titreController.text,
+                                  montant: double.parse(montantController.text.replaceAll(',', '.')),
+                                  currency: selectedCurrency,
+                                  date: selectedDate,
+                                  payeur: selectedPayeur,
+                                  repartition: repartitions,
+                                ),
+                                compteId: widget.compteDisplayModel.id,
+                              );
+                            } else {
+
+                            }
                           }
                         },
                         isLoading: vm.postTransactionStatus == Status.LOADING,

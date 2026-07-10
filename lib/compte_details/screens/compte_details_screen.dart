@@ -184,12 +184,14 @@ class TransactionsTabSuccess extends StatelessWidget {
               BoutonAdd(onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TransactionForm(compteDetails: compteDetails)),
+                  MaterialPageRoute(builder: (context) => TransactionForm(compteDisplayModel: compteDetails)),
                 );
               }),
               SizedBox(height: 32),
               if (transactionsDisplaymodels.isNotEmpty)
-                ...transactionsDisplaymodels.map((t) => TransactionItem(transactionDisplayModel: t, compteDetailsDisplayModel: compteDetails))
+                ...transactionsDisplaymodels.map(
+                  (t) => TransactionItem(transactionDisplayModel: t, compteDetailsDisplayModel: compteDetails),
+                )
               else
                 Text('Pas encore de transactions', style: TextStyle(fontSize: 20)),
               // SizedBox(height: 16),
